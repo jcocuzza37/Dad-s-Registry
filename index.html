@@ -7,3 +7,822 @@
     <h1>Hello World</h1>
   </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+  <meta name="theme-color" content="#0D1B2A"/>
+  <meta name="description" content="The baby registry guide built for dads. 14 questions. 42 categories. One personalized guide."/>
+  <title>Dad's Registry Builder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --navy:#0D1B2A;--steel:#1B3A5C;--blue:#2563A8;--sky:#4A90C4;
+      --cream:#F5F1EB;--warm:#E8DFD0;--gold:#D4A843;--green:#3D7A5E;
+      --text:#0D1B2A;--textlt:#4A6278;--white:#FFFEF9;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--white);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    button{font-family:'DM Sans',sans-serif;cursor:pointer}
+    input{font-family:'DM Sans',sans-serif}
+
+    /* ── LANDING ── */
+    #landing{min-height:100vh;display:flex;flex-direction:column}
+    .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:60px 24px 120px;position:relative;overflow:hidden}
+    .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 20%,#1B3A5C88 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 80%,#D4A84322 0%,transparent 50%);pointer-events:none}
+    .eyebrow{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;opacity:0;animation:fadeUp .6s .1s ease forwards}
+    .hero-title{font-family:'DM Serif Display',serif;font-size:clamp(38px,10vw,72px);line-height:1.05;margin-bottom:24px;opacity:0;animation:fadeUp .6s .25s ease forwards}
+    .hero-title em{font-style:italic;color:var(--gold)}
+    .hero-sub{font-size:clamp(15px,4vw,18px);line-height:1.7;color:#A8BDD0;max-width:480px;margin-bottom:40px;font-weight:300;opacity:0;animation:fadeUp .6s .4s ease forwards}
+    .hero-cta{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:var(--navy);font-family:'DM Serif Display',serif;font-size:18px;padding:18px 36px;border-radius:4px;border:none;transition:all .2s;opacity:0;animation:fadeUp .6s .55s ease forwards;align-self:flex-start}
+    .hero-cta:hover{background:#E8B847;transform:translateY(-2px);box-shadow:0 12px 40px #D4A84344}
+    .hero-stats{display:flex;gap:32px;margin-top:56px;opacity:0;animation:fadeUp .6s .7s ease forwards;flex-wrap:wrap}
+    .stat-num{font-family:'DM Serif Display',serif;font-size:32px;color:var(--gold);line-height:1}
+    .stat-label{font-size:12px;color:#6A8BA4;font-weight:400;letter-spacing:.3px;margin-top:4px}
+    .l-divider{height:1px;background:linear-gradient(90deg,transparent,#ffffff18,transparent);margin:0 24px}
+    .l-section{padding:80px 24px}
+    .l-label{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+    .l-title{font-family:'DM Serif Display',serif;font-size:clamp(28px,7vw,48px);line-height:1.15;margin-bottom:48px;max-width:500px}
+    .steps{display:flex;flex-direction:column}
+    .step{display:flex;gap:20px;padding:28px 0;border-bottom:1px solid #ffffff0f}
+    .step:last-child{border-bottom:none}
+    .step-num{font-family:'DM Serif Display',serif;font-size:48px;color:#ffffff0d;line-height:1;flex-shrink:0;width:48px;margin-top:-8px}
+    .step-title{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:8px;line-height:1.2}
+    .step-desc{font-size:14px;color:#7A9AB4;line-height:1.7;font-weight:300}
+    .cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .cat-pill{background:#ffffff08;border:1px solid #ffffff12;border-radius:8px;padding:14px 16px;display:flex;align-items:center;gap:10px}
+    .cat-icon{font-size:18px;flex-shrink:0}
+    .cat-name{font-size:13px;font-weight:500;color:#C8D8E8}
+    .cat-sub{font-size:11px;color:#4A6278;margin-top:2px}
+    .nt-strip{background:#0A1520;border-top:1px solid #ffffff0a;border-bottom:1px solid #ffffff0a;padding:48px 24px}
+    .cert-list{display:flex;flex-direction:column;gap:16px;margin-top:32px}
+    .cert-row{display:flex;gap:14px;align-items:flex-start}
+    .cert-badge{background:var(--green);color:#fff;font-size:9px;font-weight:700;padding:4px 8px;border-radius:20px;letter-spacing:.5px;white-space:nowrap;flex-shrink:0;margin-top:2px}
+    .cert-text{font-size:13px;color:#7A9AB4;line-height:1.6;font-weight:300}
+    .cert-text strong{color:var(--white);font-weight:500}
+    .test-section{padding:80px 24px;background:linear-gradient(180deg,var(--navy) 0%,#091422 100%)}
+    .testimonial{background:#ffffff06;border:1px solid #ffffff10;border-radius:12px;padding:28px 24px;margin-bottom:16px;position:relative}
+    .testimonial::before{content:'"';font-family:'DM Serif Display',serif;font-size:80px;color:var(--gold);opacity:.3;position:absolute;top:-10px;left:20px;line-height:1}
+    .test-text{font-family:'DM Serif Display',serif;font-style:italic;font-size:16px;line-height:1.6;color:#C8D8E8;margin-bottom:16px;padding-top:16px}
+    .test-author{font-size:12px;color:#4A6278;font-weight:500;letter-spacing:.5px}
+    .bottom-cta{padding:80px 24px 120px;text-align:center;background:#091422;position:relative;overflow:hidden}
+    .bottom-cta::before{content:'';position:absolute;bottom:-100px;left:50%;transform:translateX(-50%);width:400px;height:400px;background:radial-gradient(circle,#D4A84318 0%,transparent 65%);pointer-events:none}
+    .btm-title{font-family:'DM Serif Display',serif;font-size:clamp(30px,8vw,52px);line-height:1.1;margin-bottom:16px}
+    .btm-sub{font-size:15px;color:#6A8BA4;margin-bottom:40px;font-weight:300;line-height:1.6}
+    .btm-btn{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:var(--navy);font-family:'DM Serif Display',serif;font-size:18px;padding:20px 40px;border-radius:4px;border:none;transition:all .2s}
+    .btm-btn:hover{background:#E8B847;transform:translateY(-2px)}
+    .free-badge{display:inline-block;background:var(--green);color:#fff;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:24px}
+    .l-footer{padding:24px;border-top:1px solid #ffffff08;text-align:center;font-size:11px;color:#2A4055;background:#060E18}
+    .sticky{position:fixed;bottom:0;left:0;right:0;background:var(--navy);border-top:1px solid #ffffff15;padding:16px 24px 28px;z-index:100;display:flex;gap:12px;align-items:center}
+    .sticky-text{flex:1;font-size:13px;color:#7A9AB4;line-height:1.4}
+    .sticky-text strong{display:block;color:var(--white);font-size:14px;margin-bottom:2px}
+    .sticky-btn{background:var(--gold);color:var(--navy);font-family:'DM Serif Display',serif;font-size:15px;padding:13px 22px;border-radius:4px;border:none;white-space:nowrap;flex-shrink:0}
+    .fade-in{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+    .fade-in.visible{opacity:1;transform:translateY(0)}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+    /* ── APP ── */
+    #app{display:none;min-height:100vh;background:var(--cream);color:var(--text);font-family:'DM Sans',sans-serif}
+    .app-topbar{background:var(--navy);padding:16px 24px;color:var(--white)}
+    .app-toplabel{font-size:11px;letter-spacing:3px;text-transform:uppercase;opacity:.6;margin-bottom:10px}
+    .prog-row{display:flex;justify-content:space-between;margin-bottom:6px}
+    .prog-step{font-size:11px;color:#ffffff99}
+    .prog-pct{font-size:11px;color:var(--sky);font-weight:700}
+    .prog-track{height:3px;background:#ffffff22;border-radius:4px;overflow:hidden}
+    .prog-fill{height:100%;background:linear-gradient(90deg,var(--sky),var(--gold));border-radius:4px;transition:width .4s}
+    .resume-bar{background:#2563A815;border-bottom:1px solid #2563A833;padding:10px 16px;display:flex;justify-content:space-between;align-items:center}
+    .resume-text{font-size:12px;color:var(--blue);font-weight:600}
+    .resume-btn{background:none;border:1px solid #2563A844;border-radius:6px;padding:3px 10px;font-size:11px;color:var(--blue)}
+    .q-body{flex:1;padding:28px 20px 16px;overflow-y:auto}
+    .q-title{font-size:22px;font-weight:700;color:var(--navy);margin:0 0 8px;line-height:1.3;font-family:'DM Serif Display',serif}
+    .q-sub{font-size:13px;color:var(--textlt);margin:0 0 20px;line-height:1.6}
+    .skip-hint{display:block;font-size:11px;color:var(--textlt);margin-top:4px}
+    .optional-hint{display:block;font-size:11px;color:var(--blue);margin-top:4px;font-weight:700}
+    .field-label{font-size:12px;font-weight:700;color:var(--textlt);display:block;margin-bottom:6px;letter-spacing:.5px}
+    .field-input{width:100%;padding:13px 14px;border-radius:10px;border:1.5px solid var(--warm);background:var(--white);font-size:15px;color:var(--text);outline:none;margin-bottom:18px}
+    .choice-btn{width:100%;padding:14px 16px;border-radius:12px;border:2px solid var(--warm);background:var(--white);cursor:pointer;text-align:left;display:flex;align-items:center;gap:12px;margin-bottom:10px;transition:all .15s}
+    .choice-btn.active{border-color:var(--blue);background:#2563A815;box-shadow:0 0 0 1px var(--blue)}
+    .choice-radio{width:22px;height:22px;flex-shrink:0;border-radius:11px;border:2px solid var(--slate);background:transparent;display:flex;align-items:center;justify-content:center;transition:all .15s}
+    .choice-check{width:22px;height:22px;flex-shrink:0;border-radius:6px;border:2px solid var(--slate);background:transparent;display:flex;align-items:center;justify-content:center;transition:all .15s}
+    .choice-btn.active .choice-radio,.choice-btn.active .choice-check{border-color:var(--blue);background:var(--blue)}
+    .choice-label{font-weight:700;font-size:14px;color:var(--text);font-family:'DM Serif Display',serif}
+    .choice-sub{font-size:12px;color:var(--textlt);margin-top:2px}
+    .nav-bar{padding:12px 20px 36px;background:var(--white);border-top:1px solid var(--warm);display:flex;gap:12px}
+    .back-btn{flex:1;padding:14px;border-radius:10px;border:1.5px solid var(--warm);background:var(--white);font-size:14px;font-weight:600;color:var(--textlt)}
+    .next-btn{flex:2;padding:14px;border-radius:10px;border:none;font-size:14px;font-weight:700;color:var(--white);transition:all .15s}
+    .next-btn.ready{background:linear-gradient(135deg,var(--navy),var(--steel));box-shadow:0 4px 16px #0D1B2A33}
+    .next-btn.blocked{background:var(--warm);color:var(--textlt);cursor:default}
+    .cat-bud-card{background:var(--white);border-radius:12px;border:1.5px solid var(--warm);padding:12px 14px;margin-bottom:10px}
+    .cat-bud-label{font-weight:700;font-size:13px;color:var(--navy);font-family:'DM Serif Display',serif;margin-bottom:2px}
+    .cat-bud-sub{font-size:11px;color:var(--textlt);margin-bottom:10px}
+    .tier-row{display:flex;gap:8px}
+    .tier-btn{flex:1;padding:8px 4px;border-radius:8px;border:2px solid var(--warm);background:var(--cream);color:var(--textlt);font-size:12px;font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .12s}
+    .tier-btn.active{border-color:var(--blue);background:var(--blue);color:var(--white);font-weight:700}
+    .def-bar{background:#2563A815;border:1px solid #2563A844;border-radius:8px;padding:8px 12px;margin-bottom:16px;font-size:12px;color:var(--blue)}
+    .intro-steps{display:flex;flex-direction:column;gap:8px;margin:0 0 32px;text-align:left}
+    .intro-step{display:flex;gap:10px;align-items:flex-start}
+    .intro-num{background:var(--blue);color:var(--white);border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px}
+    .intro-text{font-size:13px;color:var(--textlt);line-height:1.6}
+    .start-btn{background:var(--navy);color:var(--white);border-radius:12px;padding:16px 32px;font-size:15px;font-family:'DM Serif Display',serif;font-weight:700;border:none;display:inline-block;box-shadow:0 4px 20px #0D1B2A44}
+
+    /* ── RESULT ── */
+    #result{display:none;min-height:100vh;background:var(--cream);font-family:'DM Sans',sans-serif}
+    .res-header{background:linear-gradient(135deg,var(--navy),var(--steel));padding:20px 20px 16px;color:var(--white);position:sticky;top:0;z-index:10;box-shadow:0 2px 12px #00000033}
+    .res-eyebrow{font-size:10px;letter-spacing:3px;text-transform:uppercase;opacity:.6;margin-bottom:4px}
+    .res-title{font-size:18px;font-weight:700;margin:0 0 2px;font-family:'DM Serif Display',serif}
+    .res-sub{font-size:11px;opacity:.65;margin:0 0 12px}
+    .res-actions{display:flex;gap:8px}
+    .res-action{flex:1;padding:10px 8px;border-radius:8px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:700;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
+    .ra-share{background:var(--gold);color:var(--navy)}
+    .ra-copy{background:#ffffff22;border:1px solid #ffffff33;color:var(--white)}
+    .ra-restart{background:#ffffff22;border:1px solid #ffffff33;color:var(--white);font-weight:400}
+    .role-bar{background:#3D7A5E22;border-bottom:1px solid #3D7A5E44;padding:10px 16px;font-size:12px;color:var(--white);opacity:.9}
+    .nt-bar{background:#3D7A5E22;border-bottom:1px solid #3D7A5E44;padding:10px 16px;font-size:12px;color:#A8DFC0;font-weight:700}
+    .prod-section{padding:16px 16px 8px}
+    .prod-card{background:var(--white);border-radius:12px;border:1.5px solid var(--warm);margin-bottom:14px;overflow:hidden}
+    .pc-head{padding:14px 16px}
+    .pc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+    .pc-name{font-weight:700;font-size:15px;color:var(--navy);font-family:'DM Serif Display',serif}
+    .pc-tier{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap;margin-left:8px}
+    .comp-row{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;border-radius:8px;margin-bottom:4px}
+    .comp-row.sel{background:var(--navy);border:1.5px solid var(--navy)}
+    .comp-row.unsel{background:var(--cream);border:1px solid var(--warm)}
+    .comp-tier{font-size:10px;font-weight:700;margin-right:6px}
+    .comp-row.sel .comp-tier{color:var(--gold)}
+    .comp-row.unsel .comp-tier{color:var(--textlt)}
+    .comp-pname{font-size:12px}
+    .comp-row.sel .comp-pname{color:var(--white);font-weight:700}
+    .comp-row.unsel .comp-pname{color:var(--text)}
+    .comp-price{font-size:12px;font-weight:700;white-space:nowrap;margin-left:8px}
+    .comp-row.sel .comp-price{color:var(--gold)}
+    .comp-row.unsel .comp-price{color:var(--textlt)}
+    .pick-box{background:#D4A84322;border:1.5px solid var(--gold);border-radius:8px;padding:9px 12px;margin-bottom:8px}
+    .pick-label{font-size:11px;font-weight:700;color:#6B4800;margin-bottom:3px}
+    .pick-note{font-size:12px;color:var(--text)}
+    .cert-pill{display:inline-block;background:#3D7A5E22;border:1px solid #3D7A5E44;border-radius:20px;padding:2px 10px;font-size:10px;font-weight:700;color:var(--green)}
+    .expand-btn{width:100%;padding:10px 16px;background:#E8DFD066;border:none;border-top:1px solid var(--warm);font-size:12px;color:var(--textlt);cursor:pointer;text-align:left;display:flex;justify-content:space-between;font-family:'DM Sans',sans-serif}
+    .expand-body{padding:12px 16px;background:var(--cream)}
+    .tier-note{margin-bottom:10px}
+    .tn-label{font-size:11px;font-weight:700;color:var(--textlt);margin-bottom:3px}
+    .tn-text{font-size:12px;color:var(--text);line-height:1.6;padding-left:8px;border-left:2px solid var(--warm)}
+    .warn-box{background:#FFF3CD;border:1px solid var(--gold);border-radius:8px;padding:10px 12px;margin-top:6px}
+    .warn-text{font-size:12px;color:#6B4800;line-height:1.6}
+    .red-box{background:#FFEBEB;border:1px solid var(--red);border-radius:8px;padding:10px 12px;margin-top:8px}
+    .red-text{font-size:12px;color:var(--red);line-height:1.6}
+    .pro-tip{background:var(--white);border-left:3px solid var(--slate);padding:8px 12px;margin-top:8px;border-radius:0 8px 8px 0}
+    .pt-label{font-size:11px;font-weight:700;color:var(--textlt);margin-bottom:2px}
+    .pt-text{font-size:12px;color:var(--text);line-height:1.6}
+    .avoid-box{background:#FFF3CD;border:1px solid var(--gold);border-radius:8px;padding:10px 12px;margin-bottom:16px}
+    .avoid-item{padding-left:8px;border-left:2px solid var(--gold);margin-bottom:10px}
+    .avoid-name{font-size:12px;font-weight:700;color:#6B4800}
+    .avoid-reason{font-size:11px;color:#8B6B00;line-height:1.6}
+    .checklist{background:var(--white);border:1.5px solid var(--warm);border-radius:12px;padding:16px;margin:0 16px 16px}
+    .cl-title{font-size:14px;font-weight:700;color:var(--navy);font-family:'DM Serif Display',serif;margin-bottom:10px}
+    .cl-item{display:flex;gap:12px;margin-bottom:10px;align-items:flex-start}
+    .cl-when{background:var(--navy);color:var(--white);border-radius:20px;padding:2px 8px;font-size:10px;font-weight:700;white-space:nowrap;flex-shrink:0;margin-top:2px}
+    .cl-what{font-size:12px;color:var(--text);line-height:1.6}
+    .res-footer{background:var(--white);border-top:1px solid var(--warm);padding:20px 20px 40px;display:flex;flex-direction:column;gap:10px}
+    .rf-share{width:100%;padding:15px;border-radius:10px;background:var(--gold);border:none;color:var(--navy);font-size:15px;font-family:'DM Serif Display',serif;font-weight:700}
+    .rf-copy{width:100%;padding:14px;border-radius:10px;border:1.5px solid var(--warm);background:var(--white);font-size:14px;font-family:'DM Sans',sans-serif;font-weight:600}
+    .rf-restart{width:100%;padding:12px;border-radius:10px;border:none;background:transparent;color:var(--textlt);font-size:13px;font-family:'DM Sans',sans-serif}
+    .rf-credit{text-align:center;font-size:11px;color:var(--textlt);margin:4px 0 0}
+
+    /* ── SHARE MODAL ── */
+    .modal-overlay{position:fixed;inset:0;background:#00000088;display:flex;align-items:flex-end;z-index:200;display:none}
+    .modal-overlay.open{display:flex}
+    .modal-box{background:var(--white);border-radius:20px 20px 0 0;padding:24px 20px 40px;width:100%}
+    .modal-handle{width:40px;height:4px;background:var(--warm);border-radius:4px;margin:0 auto 20px}
+    .modal-title{font-family:'DM Serif Display',serif;font-size:18px;color:var(--navy);margin:0 0 6px}
+    .modal-sub{font-size:12px;color:var(--textlt);margin:0 0 16px;line-height:1.6}
+    .modal-preview{background:var(--cream);border-radius:10px;padding:12px;margin-bottom:16px;font-size:12px;color:var(--text);line-height:1.7;font-style:italic}
+    .modal-btns{display:flex;flex-direction:column;gap:10px}
+    .modal-sms{display:block;padding:14px;border-radius:10px;background:var(--navy);color:var(--white);font-size:14px;font-family:'DM Serif Display',serif;font-weight:700;text-align:center;text-decoration:none}
+    .modal-wa{display:block;padding:14px;border-radius:10px;background:#25D366;color:var(--white);font-size:14px;font-family:'DM Serif Display',serif;font-weight:700;text-align:center;text-decoration:none}
+    .modal-copy{padding:14px;border-radius:10px;border:1.5px solid var(--warm);background:var(--white);font-size:14px;font-family:'DM Sans',sans-serif;font-weight:600;width:100%}
+    .modal-cancel{padding:12px;border:none;background:transparent;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--textlt);width:100%}
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════ LANDING PAGE ═══════════════════════════ -->
+<div id="landing">
+  <section class="hero">
+    <p class="eyebrow">Built by a dad · For dads</p>
+    <h1 class="hero-title">The baby registry<br/>guide nobody<br/>made for <em>us.</em></h1>
+    <p class="hero-sub">Answer 14 questions about your budget, lifestyle, and priorities. Get a complete personalized guide — 42 categories, every budget tier, every non-toxic certification explained in plain language.</p>
+    <button class="hero-cta" onclick="showApp()">Build my registry →</button>
+    <div class="hero-stats">
+      <div><div class="stat-num">42</div><div class="stat-label">Categories</div></div>
+      <div><div class="stat-num">14</div><div class="stat-label">Questions</div></div>
+      <div><div class="stat-num">~10</div><div class="stat-label">Minutes</div></div>
+      <div><div class="stat-num">$0</div><div class="stat-label">Cost</div></div>
+    </div>
+  </section>
+
+  <div class="l-divider"></div>
+
+  <section class="l-section fade-in">
+    <p class="l-label">How it works</p>
+    <h2 class="l-title">Three steps. One complete guide.</h2>
+    <div class="steps">
+      <div class="step"><span class="step-num">01</span><div><h3 class="step-title">Answer 14 questions</h3><p class="step-desc">Budget, non-toxic priority, feeding plan, sleep training philosophy, travel frequency, diaper type. Your answers shape every recommendation.</p></div></div>
+      <div class="step"><span class="step-num">02</span><div><h3 class="step-title">Set your budget by category</h3><p class="step-desc">Splurge on the car seat and mattress. Save on washcloths and stain remover. Mix and match — we'll respect it across all 42 categories.</p></div></div>
+      <div class="step"><span class="step-num">03</span><div><h3 class="step-title">Get your personalized guide</h3><p class="step-desc">Budget, mid-range, and luxury options for every category. A specific pick for your family. Share with your partner in one tap.</p></div></div>
+    </div>
+  </section>
+
+  <div class="l-divider"></div>
+
+  <section class="l-section fade-in">
+    <p class="l-label">What's inside</p>
+    <h2 class="l-title">Every category. Nothing missing.</h2>
+    <div class="cat-grid">
+      <div class="cat-pill"><span class="cat-icon">😴</span><div><div class="cat-name">Sleep Setup</div><div class="cat-sub">Bassinet, crib, mattress, sleep sacks</div></div></div>
+      <div class="cat-pill"><span class="cat-icon">🍼</span><div><div class="cat-name">Feeding</div><div class="cat-sub">Pump, bottles, storage, warmer</div></div></div>
+      <div class="cat-pill"><span class="cat-icon">🚗</span><div><div class="cat-name">Car Seat & Stroller</div><div class="cat-sub">Infant seat, stroller, travel crib</div></div></div>
+      <div class="cat-pill"><span class="cat-icon">🛡️</span><div><div class="cat-name">Safety & Health</div><div class="cat-sub">Monitor, thermometer, CPR device</div></div></div>
+      <div class="cat-pill"><span class="cat-icon">🛁</span><div><div class="cat-name">Bath Time</div><div class="cat-sub">Tub, towels, washcloths, detergent</div></div></div>
+      <div class="cat-pill"><span class="cat-icon">🧸</span><div><div class="cat-name">Nursery & Play</div><div class="cat-sub">Bouncer, swing, carrier, wrap</div></div></div>
+      <div class="cat-pill"><span class="cat-icon">🥦</span><div><div class="cat-name">Food & High Chair</div><div class="cat-sub">Food maker, high chair, bibs</div></div></div>
+      <div class="cat-pill"><span class="cat-icon">🎒</span><div><div class="cat-name">Extras & Utilities</div><div class="cat-sub">Diaper bag, humidifier, glider</div></div></div>
+    </div>
+  </section>
+
+  <div class="nt-strip fade-in">
+    <p class="l-label">The non-toxic guide</p>
+    <h2 style="font-family:'DM Serif Display',serif;font-size:clamp(24px,6vw,36px);line-height:1.15;margin-bottom:8px">Know what the certifications actually mean.</h2>
+    <p style="font-size:14px;color:#6A8BA4;font-weight:300;line-height:1.6">Most dads have never heard of GOTS or OEKO-TEX. The guide explains each one in plain language.</p>
+    <div class="cert-list">
+      <div class="cert-row"><span class="cert-badge">GOTS</span><p class="cert-text"><strong>Global Organic Textile Standard</strong> — fabric grown AND processed without harmful chemicals. The highest bar for baby textiles.</p></div>
+      <div class="cert-row"><span class="cert-badge">OEKO-TEX</span><p class="cert-text"><strong>Tested against 350+ toxic substances.</strong> What matters is the finished product is safe — not just what it's made from.</p></div>
+      <div class="cert-row"><span class="cert-badge">GG Gold</span><p class="cert-text"><strong>GREENGUARD Gold</strong> — low chemical emissions from furniture, mattresses, and car seats. The standard for what baby breathes.</p></div>
+      <div class="cert-row"><span class="cert-badge">EWG ✓</span><p class="cert-text"><strong>EWG Verified</strong> — Environmental Working Group clean formula. What you want on detergent, cream, and cleaning products.</p></div>
+    </div>
+  </div>
+
+  <section class="test-section fade-in">
+    <p class="l-label">From dads who used it</p>
+    <h2 class="l-title" style="margin-bottom:32px">They had no idea either.</h2>
+    <div class="testimonial"><p class="test-text">I had no idea what GOTS meant or why the Dreft in our cabinet was a problem. This guide explained it in plain language and gave me a replacement that actually works.</p><p class="test-author">MARCUS · FIRST TIME DAD · CHICAGO</p></div>
+    <div class="testimonial"><p class="test-text">My partner sent me a 47-item registry link with zero explanation. I filled this out in 10 minutes and finally understood what we actually needed.</p><p class="test-author">DARIUS · DAD OF 1 · ATLANTA</p></div>
+    <div class="testimonial"><p class="test-text">The sleep training question changing the sound machine recommendation was the moment I realized this wasn't just a generic list. It actually knew what we were doing.</p><p class="test-author">JAMES · EXPECTING DAD · NEW YORK</p></div>
+  </section>
+
+  <section class="bottom-cta fade-in">
+    <span class="free-badge">100% Free</span>
+    <h2 class="btm-title">Your registry.<br/>Your rules.</h2>
+    <p class="btm-sub">14 questions. 42 categories.<br/>About 10 minutes.</p>
+    <button class="btm-btn" onclick="showApp()">Build my registry →</button>
+  </section>
+
+  <footer class="l-footer">Built for dads by a dad · Free forever · No account required</footer>
+
+  <div class="sticky">
+    <div class="sticky-text"><strong>Dad's Registry Builder</strong>Free · 10 min · 42 categories</div>
+    <button class="sticky-btn" onclick="showApp()">Start →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ APP ═══════════════════════════ -->
+<div id="app" style="display:none;flex-direction:column;min-height:100vh">
+  <div class="app-topbar">
+    <div class="app-toplabel">Dad's Registry Builder</div>
+    <div id="prog-container" style="display:none">
+      <div class="prog-row"><span class="prog-step" id="prog-step"></span><span class="prog-pct" id="prog-pct"></span></div>
+      <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+    </div>
+  </div>
+  <div id="resume-bar" class="resume-bar" style="display:none">
+    <span class="resume-text">👋 Welcome back — previous answers saved</span>
+    <button class="resume-btn" onclick="restartApp()">Start over</button>
+  </div>
+  <div class="q-body" id="q-body"></div>
+  <div class="nav-bar" id="nav-bar">
+    <button class="back-btn" id="back-btn" onclick="goBack()" style="display:none">← Back</button>
+    <button class="next-btn ready" id="next-btn" onclick="goNext()">Continue →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ RESULT ═══════════════════════════ -->
+<div id="result" style="display:none"></div>
+
+<!-- ═══════════════════════════ SHARE MODAL ═══════════════════════════ -->
+<div class="modal-overlay" id="share-modal" onclick="closeShare(event)">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <h3 class="modal-title" id="modal-title">Share with your partner 💌</h3>
+    <p class="modal-sub">Send them the tool so you can do this together.</p>
+    <div class="modal-preview" id="modal-msg"></div>
+    <div class="modal-btns">
+      <a class="modal-sms" id="modal-sms-link" href="#">💬 Send via iMessage / SMS</a>
+      <a class="modal-wa" id="modal-wa-link" href="#" target="_blank">📱 Send via WhatsApp</a>
+      <button class="modal-copy" id="modal-copy-btn" onclick="copyModal()">📋 Copy message</button>
+      <button class="modal-cancel" onclick="document.getElementById('share-modal').classList.remove('open')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════ DATA ══════════════════
+const T = {
+  navy:"#0D1B2A",steel:"#1B3A5C",blue:"#2563A8",sky:"#4A90C4",
+  slate:"#7FA0BA",cream:"#F5F1EB",warm:"#E8DFD0",gold:"#D4A843",
+  green:"#3D7A5E",red:"#C0392B",text:"#0D1B2A",textlt:"#4A6278",white:"#FFFFFF"
+};
+
+const PRODUCTS = {
+  bassinet:{label:"Bassinet",icon:"🛏️",warning:null,note:"Order by week 34 at the latest — some have lead times.",avoid:"Any bassinet with soft padded sides or loose fabric near baby's face. AAP requires firm flat surface.",budget:{name:"HALO BassiNest 3.0 (open box via GoodBuy Gear)",price:"$125–150",cert:"—",note:"Same core swivel design as the 4.0, older model. Significant savings without sacrificing function."},mid:{name:"HALO BassiNest 4.0 Signature",price:"$279",cert:"—",note:"360° swivel so it pulls bedside for night feeds without getting up. Side wall drops for breastfeeding. Best newborn bassinet on the market."},luxury:{name:"Snoo Smart Sleeper",price:"$1,695 (or rent ~$159/mo)",cert:"—",note:"AI-powered motion that responds to baby's cries. Proven to add 1–2 hrs of sleep per night. Also available to rent — smart option since you only use it 6 months."}},
+  crib:{label:"Crib",icon:"🪵",warning:null,note:"GREENGUARD Gold is the certification that matters here — it tests for VOC emissions, not just materials.",avoid:"Any crib with drop-side rails (banned since 2011), decorative cutouts baby can get stuck in, or missing GREENGUARD Gold certification.",budget:{name:"DaVinci Kalani 4-in-1",price:"$149–249",cert:"GREENGUARD Gold",note:"Solid budget pick. Converts through 4 stages from crib to toddler bed to daybed to full bed."},mid:{name:"Babyletto Hudson 3-in-1",price:"$380–430",cert:"GREENGUARD Gold",note:"Non-toxic finish, modern slat design, converts to toddler bed and daybed. The most popular non-toxic mid-range crib."},luxury:{name:"Nestig Wave Crib",price:"$595–700",cert:"GREENGUARD Gold",note:"Stunning organic design, sustainably sourced solid wood, grows with baby."}},
+  mattress:{label:"Crib Mattress",icon:"🛌",warning:null,note:"Layer method: mattress → waterproof pad → sheet → waterproof pad → sheet. Blowout at 3am? Pull top layer, fresh set underneath.",avoid:"Any mattress with vinyl covers, polyurethane foam, or added flame retardant chemicals. Memory foam is not appropriate for infants.",budget:{name:"Newton Original 2-Stage",price:"$299",cert:"Non-toxic, Breathable",note:"100% breathable Wovenaire core — baby can breathe through it face-down. Not organic but genuinely non-toxic."},mid:{name:"Naturepedic Classic Organic 2-Stage",price:"$349",cert:"GOTS + GREENGUARD Gold",note:"Full organic certification. Firm infant side, softer toddler side. No flame retardants. The gold standard."},luxury:{name:"Avocado Organic Crib Mattress",price:"$399",cert:"GOTS + GREENGUARD Gold",note:"GOLS natural latex + organic wool. Highest-end organic option. Incredibly durable."}},
+  sleepsack:{label:"Sleep Sacks",icon:"😴",warning:null,note:"No loose blankets in the crib — ever. Sleep sacks are the safe alternative. Buy 2–3 so you always have a clean one.",avoid:"Any sleep sack with flame retardant chemical treatment. Always check. Polyester-only options with no certifications are a red flag.",budget:{name:"Burt's Bees Baby Beekeeper",price:"$25–32",cert:"GOTS + OEKO-TEX",note:"Best price-to-certification ratio on the market. Bottom-up zipper for night diaper changes."},mid:{name:"CastleWare Organic Sleep Sack",price:"$40–65",cert:"GOTS",note:"No flame retardant chemicals. Organic fleece and velour options. Sleeveless and sleeved for all seasons."},luxury:{name:"Merino Kids Baby Sleep Bag",price:"$90–130",cert:"GOTS",note:"Natural merino wool self-regulates temperature. Fits 2 months through 2 years."}},
+  soundmachine:{label:"Sound Machine",icon:"🔊",warning:"Keep below 50 decibels and at least 7 feet from baby's head. AAP recommendation.",note:"White noise masks household sounds so baby stays asleep when you drop something at 2am.",avoid:"Sound machines that loop short clips — the repetitive break wakes light sleepers.",budget:{name:"Yogasleep Dohm Classic",price:"$40–55",cert:"—",note:"A real mechanical fan inside — the most natural non-looping white noise available. Trusted since 1962."},mid:{name:"LectroFan Classic",price:"$45–60",cert:"—",note:"20 non-looping sound variations — white, pink, brown noise plus fan sounds. Excellent audio quality."},luxury:{name:"Hatch Rest 2nd Gen",price:"$70–100",cert:"—",note:"App-controlled night light and sound machine. Schedulable. Grows from newborn soother to toddler clock."}},
+  monitor:{label:"Baby Monitor",icon:"📷",warning:null,note:"Nanit does NOT require a subscription for basic live video. Subscription unlocks sleep analytics.",avoid:"Cheap WiFi monitors with no encryption — baby monitors have been hacked. Stick to established brands.",budget:{name:"Nanit Plus",price:"$200–280",cert:"—",note:"720p video, breathing band compatible, two-way audio, app-controlled. Older model but fully functional."},mid:{name:"Nanit Pro",price:"$300–380",cert:"—",note:"1080p HD, warmer nightlight, AI breathing motion tracking, temp/humidity alerts, cry detection, Alexa."},luxury:{name:"Nanit Pro + Floor Stand Bundle",price:"$400–450",cert:"—",note:"No wall drilling needed. Easy to reposition as nursery changes. Includes all Pro features."}},
+  bathtub:{label:"Baby Bath Tub",icon:"🚿",warning:"Avoid PVC (recycling #3), polystyrene (#6), and mixed plastics (#7). These commonly contain phthalates.",note:"Polypropylene (#5) is the safe plastic for baby tubs. Always check the recycling number on the bottom.",avoid:"Any tub made from PVC or vinyl. Soft foam inserts containing formamide.",budget:{name:"Primo Euro Bath",price:"$30–40",cert:"BPA-Free PP",note:"Polypropylene — BPA, lead, phthalate-free. Grows 0–24 months with integrated contoured seat."},mid:{name:"Puj Tub Sink Bath",price:"$40–50",cert:"BPA/PVC/Lead-Free",note:"Formamide-free soft foam that fits in your sink. Brilliant for C-section recovery."},luxury:{name:"Stokke Flexi Bath",price:"$55–70",cert:"BPA/Phthalate/Formaldehyde-Free",note:"Polypropylene, folds flat for storage or travel. Best all-around non-toxic pick."}},
+  bathtowels:{label:"Bath Towels",icon:"🛁",warning:null,note:"Newborn skin is extremely porous — what touches it absorbs. GOTS certification means both the cotton AND the processing chemicals are safe.",avoid:"Polyester blends, synthetic dyes, or towels with no third-party certification.",budget:{name:"Burt's Bees Baby Towel",price:"$20–28",cert:"GOTS + OEKO-TEX",note:"Both certified, soft, widely available at Target. A reliable non-toxic pick at a fair price."},mid:{name:"Natemia Hooded Towel",price:"$36–50",cert:"GOTS",note:"100% GOTS organic cotton with adorable hooded designs. Also makes matching washcloths."},luxury:{name:"Weezie Baby Towel",price:"$45–70",cert:"OEKO-TEX",note:"Ultra-plush Turkish cotton, spa-quality feel. OEKO-TEX certified safe."}},
+  washcloths:{label:"Washcloths",icon:"🧺",warning:null,note:"Buy more than you think you need. 6–8 minimum. You go through them fast.",avoid:"Polyester microfiber cloths — they scratch sensitive newborn skin and shed microplastics.",budget:{name:"Burt's Bees Baby Washcloths (6-pk)",price:"$16–22",cert:"GOTS + OEKO-TEX",note:"Both certified, soft enough for newborn skin, affordable."},mid:{name:"Natemia Washcloths (6-pk)",price:"$22",cert:"GOTS",note:"100% GOTS organic cotton with non-toxic dyes. Pairs perfectly with Natemia towels."},luxury:{name:"Monica + Andy Washcloths",price:"$28–35",cert:"GOTS",note:"GOTS certified, free from lead, phthalates, and flame retardants. Beautiful prints."}},
+  detergent:{label:"Baby Detergent",icon:"🫧",warning:"⚠️ Dreft gets an EWG 'F' rating. Contains Sodium Borate — a documented endocrine disruptor. Marketed for babies. Avoid entirely.",note:"Wash all baby clothes, sheets, and swaddles before first use. Residual chemicals from manufacturing are real.",avoid:"Dreft, Tide Free & Clear (found to contain 1,4-dioxane), any detergent with optical brighteners or synthetic fragrance.",budget:{name:"Seventh Generation Free & Clear",price:"$12–18",cert:"EWG Verified",note:"Plant-based, fragrance-free, dye-free. Good backup option that's widely available."},mid:{name:"Molly's Suds Baby Detergent",price:"$18–25",cert:"EWG A-Rated",note:"Only 4–5 earth-derived ingredients. Free from 1,4-dioxane, phthalates, optical brighteners. Gold standard."},luxury:{name:"Branch Basics Concentrate",price:"$49",cert:"EWG Verified",note:"One ultra-clean concentrate diluted for laundry, dishes, and all-purpose cleaning."}},
+  bottles:{label:"Baby Bottles",icon:"🍼",warning:null,note:"Always use slow flow Level 1 nipples when combo feeding. Pace the feeding — hold bottle horizontal, let baby control the flow.",avoid:"BPA-free plastic bottles still leach other chemicals at heat. Glass is the safest option.",budget:{name:"Dr. Brown's Glass Wide-Neck",price:"~$30/3-pack",cert:"Glass",note:"Vent system reduces air intake — best if baby shows gas or colic. Dishwasher safe."},mid:{name:"Lifefactory Glass 6-Bottle Starter Set",price:"$99",cert:"Glass",note:"100% glass with protective silicone sleeve. No plastic leaching ever."},luxury:{name:"Mila's Keeper Glass Bottles",price:"$42/2-pack",cert:"Glass, HSA/FSA eligible",note:"Glass storage and feeding combined. Reusable — no single-use bag waste."}},
+  breastpump:{label:"Breast Pump",icon:"🤱",warning:null,note:"Order through Aeroflow around week 30–32. Most insurance covers 100% — confirm prior authorization first.",avoid:"Buying a pump before checking insurance. Most families pay $0. Open-system pumps — hygiene risk.",budget:{name:"Spectra S2 (via insurance)",price:"$0 with insurance",cert:"Closed system",note:"Hospital-grade double electric pump, closed system. The S2 plugs in only — no battery."},mid:{name:"Spectra S1 (via insurance)",price:"$0 or small upgrade fee",cert:"Closed system",note:"Same as S2 but has a built-in rechargeable battery. Worth the upgrade fee for cordless freedom."},luxury:{name:"Elvie Stride or Willow Go Wearable",price:"$200–350 (after insurance)",cert:"Closed system",note:"Hands-free wearable pump. Silent, discreet. Game changer for working moms."}},
+  milkstorage:{label:"Breast Milk Storage",icon:"🧊",warning:null,note:"Breast milk: room temp 4 hours | fridge 4 days | freezer 6–12 months. Label every bag with date and volume.",avoid:"Generic store-brand plastic storage bags with unknown BPA-alternative plasticizers.",budget:{name:"Lansinoh Storage Bags (100-pk)",price:"$16–20",cert:"BPA-Free",note:"Most widely available, BPA-free, double-zipper seal. Pre-sterilized, lay flat to freeze."},mid:{name:"Mila's Keeper Glass Bottles",price:"$42/2-pack",cert:"Glass, HSA/FSA eligible",note:"Reusable glass storage. No bag waste. HSA/FSA eligible."},luxury:{name:"Junobie Reusable Silicone Bags",price:"$35–45/set",cert:"Food-grade silicone",note:"Food-grade silicone, reusable, no plastic contact. Dishwasher and freezer safe."}},
+  formulaprep:{label:"Formula Prep",icon:"🍼",warning:null,note:"Always use water at the temperature specified on your formula brand — not all formulas prep the same way.",avoid:"Tap water unless verified lead-free. Never microwave formula.",budget:{name:"Baby Brezza Formula Pro Mini",price:"$80–100",cert:"BPA-Free",note:"Single-serve formula dispenser — auto-mixes to perfect temperature instantly. Game changer for night feeds."},mid:{name:"Baby Brezza Formula Pro Advanced",price:"$180–200",cert:"BPA-Free",note:"Full-size version. Holds more formula powder and water. Worth it if you're formula-only."},luxury:{name:"Tommee Tippee Perfect Prep Machine",price:"$60–80",cert:"BPA-Free",note:"Dispenses hot water to kill bacteria, tops up with cool — ready in 2 minutes."}},
+  bottlewarmer:{label:"Bottle Warmer (Home)",icon:"🌡️",warning:"Never microwave breast milk — destroys antibodies and creates dangerous hot spots.",note:"Even warming is the key — bottle warmers heat from the outside in, preventing hot spots.",avoid:"Microwave. Any warmer that doesn't have an auto-shutoff.",budget:{name:"Kiinde Kozii Bottle Warmer",price:"$40–50",cert:"BPA-Free",note:"Water bath warming — the gentlest method that best preserves breast milk nutrients."},mid:{name:"Philips Avent Premium Warmer",price:"$50–60",cert:"BPA-Free",note:"Heats evenly in 3 minutes. Works with Avent bottles and most other brands. Auto-shutoff."},luxury:{name:"Baby Brezza Instant Warmer",price:"$80–90",cert:"BPA-Free",note:"Dispenses water at exact preset temperature instantly. Best for sleep-deprived midnight feeds."}},
+  travelwarmer:{label:"Travel Bottle Warmer",icon:"✈️",warning:null,note:"For planes, cars, and anywhere without an outlet. A warmer that doesn't need electricity is invaluable.",avoid:"Relying on asking flight attendants for hot water — inconsistent.",budget:{name:"Kiinde Kozii Voyager",price:"$18–22",cert:"BPA/Phthalate/PVC-Free",note:"No electricity needed — pour hot water into insulated stainless steel container, warm passively. TSA-compliant."},mid:{name:"Babymoov Moov & Feed",price:"$45–55",cert:"BPA/Lead/Phthalate-Free",note:"USB-C rechargeable, heats 11.5oz, holds temperature 7 hours."},luxury:{name:"Baby Brezza Portable Warmer",price:"$55–70",cert:"BPA-Free",note:"Heats 8oz in 3 minutes. 4 temperature settings, 8-bottle battery life per charge."}},
+  milkcooler:{label:"Breast Milk Cooler",icon:"🧊",warning:null,note:"Essential for any pumping mom who leaves the house. Keeps milk safe during commutes and travel.",avoid:"Loose ice in a regular bag — inconsistent temperature, spillage risk.",budget:{name:"Medela Breast Milk Cooler Set",price:"$25–35",cert:"BPA-Free",note:"4 BPA-free bottles + contoured ice pack. Keeps cold 8+ hours. Dishwasher-safe bottles."},mid:{name:"PackIt Freezable Bottle Cooler",price:"$25–30",cert:"Non-toxic gel",note:"Built-in freezable gel liner — no separate ice pack. Freeze overnight, stays cold 12 hours."},luxury:{name:"Momcozy Hard Shell Cooler",price:"$35–50",cert:"BPA-Free",note:"Hard-shell exterior, holds two 11oz BPA-free bottles, separates pumping sessions."}},
+  carseat:{label:"Infant Car Seat",icon:"🚗",warning:null,note:"Get car seat professionally installed before baby arrives. Many fire stations do this free. GREENGUARD Gold is the non-toxic gold standard.",avoid:"Used car seats — can't verify crash history. Expired car seats. Any seat without a clear expiration date.",budget:{name:"Chicco KeyFit Max ClearTex",price:"~$250",cert:"JPMA, ClearTex fabric",note:"ClearTex fabric has no added chemicals. Excellent safety record. Best budget non-toxic infant car seat."},mid:{name:"UPPAbaby Aria V2",price:"~$450",cert:"JPMA",note:"6.8 lbs fully loaded — very lightweight. Strong safety record. No GREENGUARD Gold certification."},luxury:{name:"Nuna PIPA Aire RX",price:"~$550",cert:"GREENGUARD Gold",note:"GREENGUARD Gold certified — tested against 360+ VOCs. UPF 50+ canopy. Native Nuna stroller connection."}},
+  stroller:{label:"Stroller",icon:"🚼",warning:null,note:"Car seat and stroller are linked — Nuna MIXX Next + Nuna PIPA Aire RX = native connection, no adapters needed.",avoid:"Umbrella strollers for newborns — they don't recline flat. Any stroller without a full recline for babies under 6 months.",budget:{name:"Evenflo Gold Pivot Xpand",price:"$400–500",cert:"—",note:"Converts to a double stroller — smart if planning more kids. Best as a second practical stroller."},mid:{name:"Nuna MIXX Next",price:"$999",cert:"Non-toxic materials",note:"Fully flat recline for newborns, native PIPA connection, compact fold, easy one-hand operation."},luxury:{name:"Silver Cross Reef 2",price:"$1,199+",cert:"—",note:"Overnight-approved bassinet attachment, 55 lb capacity, stunning British design. Original Reef discontinued Jan 2026."}},
+  bouncer:{label:"Baby Bouncer",icon:"🪑",warning:null,note:"Motor-free is always better — baby powers it with their own movement, which is more developmentally appropriate.",avoid:"Any bouncer with foam padding that can't be removed and washed. Plastic bouncers with no fabric certifications.",budget:{name:"Bloom Coco Bouncer",price:"$150–200",cert:"OEKO-TEX",note:"OEKO-TEX certified, stylish, JPMA certified safety, folds flat."},mid:{name:"BabyBjörn Bouncer Bliss",price:"$200–270",cert:"OEKO-TEX + JPMA",note:"Motor-free — powered by baby's own movement. Grows newborn to 2 years (29 lbs). Machine-washable."},luxury:{name:"Nuna LEAF Grow",price:"$250–310",cert:"GOTS + OEKO-TEX + GREENGUARD Gold",note:"Triple-certified. Motor-free gentle sway. GOTS organic insert. Grows to 130 lbs."}},
+  swing:{label:"Baby Swing",icon:"🎠",warning:"⚠️ No unsupervised sleep in any swing — ever. AAP safe sleep requires firm flat surface, on back, alone.",note:"Many swings use non-certified fabrics. If you go MamaRoo, layer a GOTS organic muslin cover over the seat.",avoid:"Using any swing or bouncer as a sleep surface. Swings safe to 9 months max.",budget:{name:"Graco Soothe My Way",price:"$130–180",cert:"—",note:"Multi-directional, removable rocker, multiple sounds. Add organic muslin cover for crunchy families."},mid:{name:"4moms MamaRoo 4",price:"$250–300",cert:"JPMA",note:"5 unique motion types including car ride bounce. App-controlled. Fabric not certified — use organic cover."},luxury:{name:"Hushamok Hammock",price:"$200–280",cert:"GOTS + OEKO-TEX",note:"GOTS and OEKO-TEX certified organic cotton hammock. Most crunchy-approved swing available."}},
+  carrier:{label:"Baby Carrier",icon:"👶",warning:null,note:"T.I.C.K.S rule: Tight, In view at all times, Close enough to kiss, Keeps chin off chest, Supported back.",avoid:"Bag slings and hip seat carriers for newborns — many don't support the spine. Any carrier that curls baby's chin to chest.",budget:{name:"Ergobaby Embrace",price:"$80–100",cert:"Non-toxic",note:"No insert needed from birth. Structured support from day one. 7–25 lbs. Best for dads who want simplicity."},mid:{name:"Tula Free-to-Grow",price:"$150–180",cert:"GOTS options available",note:"GOTS fabric options, hip-healthy M-position built in, newborn-ready without an insert."},luxury:{name:"Ergobaby Omni Breeze",price:"$200–230",cert:"Non-toxic",note:"All 4 carrying positions. Newborn through toddler 7–45 lbs. SoftFlex breathable mesh."}},
+  wrap:{label:"Baby Wrap",icon:"🧣",warning:null,note:"Wraps have a learning curve — practice before baby arrives using a stuffed animal. Once you get it, it's the closest hold available.",avoid:"Stretchy wraps for babies over 15 lbs — they sag. Ring slings without proper instruction.",budget:{name:"Boba Organic Wrap",price:"$40–55",cert:"GOTS",note:"GOTS certified organic cotton. Most crunchy-approved wrap by certification."},mid:{name:"Ergobaby Aura Wrap",price:"$50–70",cert:"Natural fiber",note:"Viscose from eucalyptus. Contrasting edge stitching makes tying easier for beginners."},luxury:{name:"Solly Baby Wrap",price:"$80–95",cert:"OEKO-TEX TENCEL",note:"OEKO-TEX certified TENCEL — lightest and most breathable wrap available."}},
+  tummymat:{label:"Tummy Time Mat",icon:"🧸",warning:"⚠️ Avoid EVA foam (off-gasses formamide), PVC (releases lead/phthalates), and polyurethane foam with flame retardants.",note:"Start tummy time from day one — a few minutes, building to 30 total minutes per day by 3 months.",avoid:"EVA foam puzzle mats, PVC play mats, any mat without clear material disclosure.",budget:{name:"Piccalio Tummy Time Mat",price:"$80–120",cert:"GOTS + OEKO-TEX",note:"GOTS organic cotton + natural latex fill. Waterproof, double-sided, machine washable."},mid:{name:"Lalo Play Gym",price:"$125–150",cert:"FSC Certified wood",note:"FSC beech wood + lyocell mat. Converts from tummy time mat to play gym to toddler tent."},luxury:{name:"Toki Mat",price:"$120–180",cert:"GOLS certified latex",note:"GOLS certified natural rubber latex foam — organically grown. Soft, cushiony, foldable."}},
+  lounger:{label:"Infant Lounger",icon:"🛋️",warning:"⚠️ NEVER use as a sleep surface. For supervised awake time only — AAP safe sleep guidelines are non-negotiable.",note:"For supervised floor time, feeding support, and keeping baby comfortable nearby. Not for sleep.",avoid:"Never use any lounger for unsupervised sleep. DockATot received a CPSC violation in 2022 — verify current compliance.",budget:{name:"Finn + Emma Oval Lounge Mat",price:"$130–160",cert:"GOTS + OEKO-TEX",note:"GOTS organic cotton, compostable cover, machine washable. Best budget organic option."},mid:{name:"Snuggle Me Organic",price:"$180–220",cert:"GOTS + OEKO-TEX",note:"100% organic cotton, patented center sling creates womb-like hold. Made in USA."},luxury:{name:"DockATot Deluxe+",price:"$200–250",cert:"OEKO-TEX",note:"OEKO-TEX certified, roomier interior, wide color and print selection. Verify current CPSC compliance."}},
+  teether:{label:"Teething Toys",icon:"🦷",warning:"⚠️ Never use amber teething necklaces — documented choking and strangulation deaths. Never use benzocaine gels (FDA warning) or belladonna teething tablets.",note:"Safe materials: medical-grade silicone, natural rubber from the hevea tree, or untreated hardwood.",avoid:"PVC teethers, BPA or phthalates, amber necklaces, benzocaine gels, belladonna tablets.",budget:{name:"Moonjax Silicone Teether",price:"$14–18",cert:"Medical-grade silicone, Made in USA",note:"100% medical-grade silicone, dye and toxin-free, no hidden holes (no mold risk), gag-free."},mid:{name:"Natursutten Natural Rubber Teether",price:"$15–20",cert:"Natural rubber",note:"100% hevea tree rubber, air cushion inside, two sides fused — no holes for mold to enter."},luxury:{name:"Sophie la Girafe",price:"$25–30",cert:"Natural rubber",note:"Classic design. 100% natural rubber. Check that the hole at the base is sealed — open hole = mold risk."}},
+  diaperpail:{label:"Diaper Pail",icon:"🗑️",warning:null,note:"Stainless steel never absorbs odors. Plastic pails smell permanently after a few months no matter how well you clean them.",avoid:"Any plastic pail if odor is a priority — they all start smelling eventually.",budget:{name:"Dekor Plus",price:"$45–65",cert:"—",note:"Foot pedal, trap-door design. Odor control decent but weaker than top two. Proprietary refills."},mid:{name:"Munchkin STEP",price:"$50–70",cert:"—",note:"Highest odor control score in independent testing. Foot pedal, baking soda puck. Plastic absorbs odors over time."},luxury:{name:"Ubbi Steel",price:"$80–100",cert:"Stainless steel",note:"Only stainless steel diaper pail — never absorbs odors. Use any regular trash bag. 3-year warranty."}},
+  diapercream:{label:"Diaper Cream",icon:"🧴",warning:null,note:"Non-nano zinc oxide is the safe effective ingredient. Nano zinc oxide particles can penetrate skin — avoid them.",avoid:"Petroleum-based creams, products with parabens, synthetic fragrance, or nano zinc oxide.",budget:{name:"Badger Baby Diaper Cream",price:"$12–15",cert:"EWG Verified",note:"Organic beeswax and non-nano zinc oxide. Very clean formula. EWG verified safe."},mid:{name:"Earth Mama Diaper Balm",price:"$12–16",cert:"EWG Verified",note:"Organic shea and calendula, non-nano zinc oxide, fragrance-free, safe for cloth diapers."},luxury:{name:"Wellbeing Kids Zinc Cream",price:"$18–22",cert:"EWG Verified",note:"Non-nano zinc oxide, thick protective layer, fully transparent clean ingredient list."}},
+  nasal:{label:"Nasal Aspirator",icon:"👃",warning:null,note:"The oral suction method sounds gross but gives total control over suction strength. The hygiene filter blocks 100% of germs.",avoid:"Old-style bulb syringes — can't see or control suction, impossible to clean inside.",budget:{name:"FridaBaby NoseFrida Manual",price:"$15–20",cert:"BPA-Free",note:"Most effective booger tool on the market. Oral suction with disposable hygiene filter. Dishwasher-safe."},mid:{name:"Oogiebear Bulb + Picker",price:"$15–20",cert:"BPA-Free",note:"Dual function — suction for wet mucus plus soft looped picker for dried boogers."},luxury:{name:"FridaBaby Electric NoseFrida",price:"$30–45",cert:"BPA-Free",note:"3 suction levels, USB-C rechargeable, distraction light, two tip sizes."}},
+  thermometer:{label:"Thermometer",icon:"🌡️",warning:null,note:"Rectal temperature is most accurate for infants under 3 months. 100.4°F or higher in a baby under 2 months = call provider immediately.",avoid:"Mercury thermometers. Forehead strips — inaccurate. Use rectal as primary for newborns.",budget:{name:"Vicks Baby Rectal Thermometer",price:"$8–12",cert:"Mercury-Free",note:"Simple, accurate, flexible safety tip, very affordable. Rectal only — does exactly what it needs to."},mid:{name:"FridaBaby 3-in-1 Thermometer",price:"$30–40",cert:"Mercury-Free",note:"Rectal, armpit, and forehead modes in one. Flexible tip, 10-second read, memory function."},luxury:{name:"Kinsa QuickCare Smart Thermometer",price:"$25–35",cert:"Mercury-Free",note:"Connects to app, tracks illness history, gives guidance on when to call the doctor."}},
+  nailkit:{label:"Electric Nail Kit",icon:"💅",warning:null,note:"File nails while baby is sleeping — newborn nails are soft and take seconds. Never clip — too easy to catch skin.",avoid:"Nail scissors or clippers for newborns. Filing while baby is awake and squirming.",budget:{name:"Baby Trend Electric Nail File",price:"$12–15",cert:"—",note:"Affordable, comes with multiple file pads. Louder than premium options. Gets the job done."},mid:{name:"FridaBaby NailFrida",price:"$20–25",cert:"—",note:"Peephole window so you can see exactly where you're filing. 8 file pads, 4 speed settings."},luxury:{name:"Zoli BUZZ B",price:"$19–25",cert:"—",note:"Ultra-quiet motor — won't startle sleeping baby. LED light, 8 speed settings, rechargeable."}},
+  cradlecap:{label:"Cradle Cap Remover",icon:"🪮",warning:null,note:"Method: apply organic coconut or jojoba oil to scalp, let sit 5–10 minutes, then gently brush. Repeat every few days.",avoid:"Picking flakes with fingernails — causes irritation. Mustela and similar contain synthetic ingredients — check EWG first.",budget:{name:"FridaBaby DermaFrida FlakeFixer",price:"$13–18",cert:"Non-toxic silicone",note:"Soft silicone brush that gently loosens and lifts flakes. Pair with any natural oil."},mid:{name:"Oogiebear Cradle Cap Brush + Comb",price:"$15–20",cert:"Non-toxic silicone",note:"Dual-sided — soft brush and fine comb for more precision on thicker patches."},luxury:{name:"Frida Baby Head-to-Toe Kit",price:"$25–35",cert:"Non-toxic",note:"Complete grooming kit. Good shower gift for a dad who wants everything in one box."}},
+  foodmaker:{label:"Baby Food Maker",icon:"🥦",warning:null,note:"Making your own baby food is cheaper than store-bought, especially with organic produce. Batch cook and freeze in ice cube trays.",avoid:"Heating food in plastic containers — even BPA-free plastics leach other chemicals at high temperatures.",budget:{name:"NutriBullet Baby Complete",price:"$70–90",cert:"BPA-Free",note:"Compact, steam and blend, BPA-free. Plastic contact with food during steaming is a limitation."},mid:{name:"Baby Brezza One Step Deluxe",price:"$100–130",cert:"BPA-Free, glass bowl option",note:"True one-step — steam and blend in the same bowl. Glass bowl option. Auto shut-off."},luxury:{name:"BEABA Babycook Neo",price:"$200–250",cert:"Borosilicate glass + stainless steel",note:"The gold standard. Glass bowl and stainless steel steamer — zero plastic contacts food. 4-in-1."}},
+  highchair:{label:"High Chair / Booster",icon:"🍽️",warning:null,note:"Stokke Tripp Trapp is the long-term investment — used from newborn to adulthood. Many families use these 15+ years.",avoid:"Plastic high chairs with no fabric certifications. Chairs with seat covers that can't be fully removed.",budget:{name:"UPPAbaby Ciro Booster",price:"$150–200",cert:"OEKO-TEX",note:"OEKO-TEX certified fabric, adjusts as child grows, attaches to most dining chairs."},mid:{name:"Stokke Tripp Trapp + Newborn Set",price:"$300–400",cert:"OEKO-TEX cushion",note:"Grows from newborn through adulthood with different add-ons. Lasts decades."},luxury:{name:"Stokke Tripp Trapp Complete Bundle",price:"$450+",cert:"OEKO-TEX",note:"Full system: chair, newborn set, baby set, tray, and cushion. Everything included."}},
+  foodbib:{label:"Food Catcher Bib",icon:"🥄",warning:null,note:"The suction on the EZPZ mat is genuinely strong — baby cannot throw it. Changes mealtimes completely.",avoid:"Fabric bibs for solids — absorb everything and grow bacteria. BPA or PVC plastic bibs.",budget:{name:"Bumkins Silicone Bib with Pocket",price:"$10–13",cert:"BPA-Free",note:"Food-grade silicone catch pocket, machine washable, wide coverage."},mid:{name:"Mushie MUSE Silicone Bib",price:"$18–22",cert:"BPA-Free food-grade silicone",note:"100% food-grade silicone, beautiful neutral tones, large front pocket."},luxury:{name:"EZPZ Mini Mat",price:"$25–30",cert:"BPA-Free food-grade silicone",note:"Suctions directly to the high chair tray — cannot be thrown. Plate and placemat in one."}},
+  chokingdevice:{label:"Anti-Choking Device",icon:"🫁",warning:"⚠️ These devices supplement CPR training — they do not replace it. AHA, AAP, and Red Cross still recommend back blows and abdominal thrusts as primary interventions.",note:"Both devices are FDA-registered Class II medical devices. LifeVac comes with infant, child, and adult masks in one kit.",avoid:"Relying on this device without also knowing back blows and abdominal thrusts.",budget:{name:"Dechoker",price:"$55–70",cert:"FDA Registered",note:"Syringe-style suction, compact, built-in tongue depressor. Age-specific units required per age range."},mid:{name:"LifeVac",price:"$60–70",cert:"FDA Registered",note:"Patented one-way valve system. One kit covers infant, child, and adult. 97.8% effectiveness in studies."},luxury:{name:"LifeVac + Wall Mount Kit",price:"$80–90",cert:"FDA Registered",note:"Same LifeVac with permanent wall mount for kitchen, nursery, and car."}},
+  diaperbag:{label:"Diaper Bag Backpack",icon:"🎒",warning:null,note:"Backpack style beats a shoulder tote every time — you'll be carrying a car seat in one hand.",avoid:"Cheap pleather bags that sweat against your back. Weak clasps that pop open when packed tight.",budget:{name:"Ruvalino Diaper Bag Backpack",price:"$40",cert:"Waterproof/Tear-Resistant",note:"Surprisingly capable. Multiple pockets, waterproof lining, fits stroller clips."},mid:{name:"Beau Pack R1 Premium Travel Pack",price:"$149",cert:"CPSIA Non-Toxic",note:"Designed for dads. Clean look, laptop compartment, insulated bottle holders. CPSIA non-toxic."},luxury:{name:"Dagne Dover Indi Neoprene Backpack",price:"$215",cert:"OEKO-TEX Lining, REPREVE Recycled",note:"OEKO-TEX certified lining, REPREVE recycled materials, machine washable. Genuinely stylish."}},
+  travelcrib:{label:"Travel Crib & Playard",icon:"⛺",warning:null,note:"The Guava Lotus has a side-zip door — you crawl in to soothe instead of lowering dead weight over a rail at midnight.",avoid:"Heavy traditional pack-and-plays for frequent travelers — 25+ lbs. For a grandparents' house unit, Graco is fine.",budget:{name:"Graco Pack n Play Portable Playard",price:"$80",cert:"JPMA Certified",note:"JPMA certified, widely available, reliable. Perfect for grandparents' house where it stays permanently."},mid:{name:"Guava Lotus Travel Crib",price:"$279",cert:"GREENGUARD Gold, FR-Free",note:"GREENGUARD Gold certified, flame retardant free. Side-zip door. Packs into a backpack, fits overhead bin."},luxury:{name:"BabyBjorn Travel Crib Light",price:"$320",cert:"OEKO-TEX Standard 100",note:"OEKO-TEX certified, folds in under 3 seconds, weighs just 11 lbs."}},
+  humidifier:{label:"Cool Mist Humidifier",icon:"💧",warning:"⚠️ Use distilled water only — tap water in ultrasonic humidifiers releases mineral white dust into nursery air. Pediatricians warn against hot steam vaporizers due to burn risk.",note:"Dry air worsens nasal congestion and disrupts sleep. Helps baby breathe easier especially in winter.",avoid:"Hot steam vaporizers — burn risk. Humidifiers without anti-mold technology. Never use tap water in an ultrasonic model.",budget:{name:"Frida Baby 3-in-1 Humidifier",price:"$50",cert:"BPA-Free",note:"Doubles as diffuser and nightlight. BPA-free. Clean and replace filter regularly."},mid:{name:"Canopy Mold-Free Humidifier",price:"$150",cert:"Evaporative, Anti-Microbial",note:"Evaporative technology means zero white dust. Anti-microbial paper filter. Dishwasher-safe parts."},luxury:{name:"Dyson Purifier Humidify+Cool",price:"$899",cert:"HEPA H13 Certified",note:"Purifies AND humidifies simultaneously. HEPA H13 removes 99.97% of particles."}},
+  glider:{label:"Nursery Glider / Recliner",icon:"🛋️",warning:null,note:"You will spend hours here at 3am. Electronic recline is worth it — manual levers can snap loudly and wake a sleeping baby.",avoid:"Light-colored fabrics with no stain treatment. Any chair you cannot immediately wipe down.",budget:{name:"DaVinci Olive Upholstered Glider",price:"$349",cert:"GREENGUARD Gold, Formaldehyde-Free",note:"GREENGUARD Gold certified, formaldehyde-free. Best certified-safe glider at the budget tier."},mid:{name:"Babyletto Kiwi Electronic Recliner",price:"$799",cert:"GREENGUARD Gold, CertiPUR-US Foam",note:"Electronic recline — no manual lever to wake baby. GREENGUARD Gold certified. Performance fabric."},luxury:{name:"Pottery Barn Comfort Swivel Glider",price:"$1,200+",cert:"GREENGUARD Gold",note:"GREENGUARD Gold certified, fully customizable fabric, built-in USB, smooth 360° swivel."}},
+  blackoutcurtains:{label:"Blackout Curtains",icon:"🌙",warning:null,note:"Babies' sleep cycles are light-dependent. Even a sliver of light disrupts naps. Travel versions essential for hotels and grandparents' houses.",avoid:"Curtains labeled 'room darkening' — not the same as true blackout. Test by holding fabric to sunlight.",budget:{name:"AmazonBasics Portable Blackout Curtain",price:"$30",cert:"Standard Polyester",note:"Suction cup travel version. Works in a pinch. Adequate for occasional use."},mid:{name:"Sleepout Portable Blackout Curtain",price:"$79",cert:"OEKO-TEX Certified",note:"OEKO-TEX certified, thermal insulation, strong suction cups that hold all night."},luxury:{name:"Sleepout Home + Travel Bundle",price:"$140",cert:"100% Blackout, Non-Toxic",note:"Permanent home curtains plus travel set. Both non-toxic certified. One solution for nursery and every trip."}},
+  stainremover:{label:"Non-Toxic Stain Remover",icon:"🧪",warning:"⚠️ Harsh chemical stain sprays leave residue on baby clothes against highly absorbent skin. A non-toxic enzyme formula breaks down stains with zero chemical risk.",note:"Keep a bottle at the changing station. Treat immediately — dried blowout stains are significantly harder.",avoid:"OxiClean on colored baby clothes — fades them. Bleach on anything. Generic sprays with no ingredient disclosure.",budget:{name:"Miss Mouth's Messy Eater Spray",price:"$16",cert:"EPA Safer Choice, Biodegradable",note:"EPA Safer Choice certified, biodegradable. Effective on food and formula stains."},mid:{name:"Puracy Natural Stain Remover",price:"$22",cert:"EWG A-Rated, 99.5% Natural",note:"EWG A-rated, 6-enzyme formula, 99.5% natural. Removes blood, formula, food without harsh chemicals."},luxury:{name:"Branch Basics Starter Kit + Oxygen Boost",price:"$75",cert:"EWG Verified",note:"EWG Verified concentrate. Oxygen Boost adds enzyme power. One kit replaces multiple cleaning products."}}
+};
+
+const FEEDING_CATS_BREAST=["breastpump","milkstorage","milkcooler","travelwarmer"];
+const FEEDING_CATS_FORMULA=["formulaprep","travelwarmer"];
+const FEEDING_CATS_BOTH=["bottles","bottlewarmer"];
+const SKIP_MAP={"stroller":["stroller"],"car-seat":["carseat"],"crib":["crib"],"bassinet":["bassinet"],"food-maker":["foodmaker"],"high-chair":["highchair"],"monitor":["monitor"],"travel-crib":["travelcrib"],"glider":["glider"]};
+const TOG_GUIDE={summer:"0.5 TOG — rooms are warm, baby needs minimal coverage",spring:"1.0 TOG — moderate weight, good for transitional temperatures",fall:"1.5–2.5 TOG — cooler nights need more warmth",winter:"2.5–3.0 TOG — maximum warmth for cold rooms"};
+const STROLLER_NOTES={travel:"Since travel is your priority, the Nuna MIXX Next's compact fold and lightweight design make it the strongest fit.",terrain:"For terrain, the Nuna MIXX Next handles most surfaces well but the Bugaboo Fox 5 Renew has exceptional suspension for rough ground.",urban:"For urban use, compact fold and narrow profile matter most. The Nuna MIXX Next wins on both counts.",design:"For design priority, the Silver Cross Reef 2 is genuinely stunning and stands out. The Nuna is sleek but more understated."};
+
+const QUESTIONS=[
+  {id:"intro",type:"info",title:"Hey Dad. 👊",subtitle:"Answer 14 questions. Get a complete personalized baby registry guide — every category, with budget, mid-range, and luxury options plus a specific pick for your family.",cta:"Let's build your registry"},
+  {id:"name",type:"text",title:"What's your name?",subtitle:"And your partner's — we'll personalize the guide for both of you.",fields:[{key:"dadName",label:"Your name",placeholder:"e.g. Marcus"},{key:"partnerName",label:"Partner's name",placeholder:"e.g. Nicole (optional)"},{key:"babyName",label:"Baby's name or nickname",placeholder:"e.g. Baby girl, TBD, Ethan"}]},
+  {id:"season",type:"choice",title:"When is baby arriving?",subtitle:"Affects sleep sack TOG weight and timing reminders.",key:"season",options:[{value:"winter",label:"❄️ Winter",sub:"Dec – Feb"},{value:"spring",label:"🌸 Spring",sub:"Mar – May"},{value:"summer",label:"☀️ Summer",sub:"Jun – Aug"},{value:"fall",label:"🍂 Fall",sub:"Sep – Nov"}]},
+  {id:"nontoxic",type:"choice",title:"How important is non-toxic?",subtitle:"Shapes every recommendation in your guide.",key:"nontoxic",options:[{value:"full",label:"🌿 Full Crunchy",sub:"GOTS, OEKO-TEX, EWG — no exceptions"},{value:"moderate",label:"⚖️ Moderate",sub:"Important but I'm practical"},{value:"none",label:"😌 No Preference",sub:"Safety certified is enough"}]},
+  {id:"budget",type:"choice",title:"Overall budget approach?",subtitle:"You'll fine-tune by category next.",key:"budget",options:[{value:"budget",label:"💰 Budget-Conscious",sub:"Best value, certified safe"},{value:"mid",label:"⚖️ Mid-Range",sub:"Quality without going overboard"},{value:"luxury",label:"✨ Luxury",sub:"Best of the best"},{value:"mix",label:"🎯 Smart Mix",sub:"I'll set it by category"}]},
+  {id:"categoryBudgets",type:"category-budget",title:"Fine-tune by category",subtitle:"Your default is set. Override any category here.",key:"categoryBudgets"},
+  {id:"feeding",type:"choice",title:"How are you feeding baby?",subtitle:"Determines which feeding gear we include.",key:"feeding",options:[{value:"breast",label:"🤱 Breastfeeding",sub:"Pump, bottles, storage all needed"},{value:"formula",label:"🍼 Formula",sub:"Bottles and prep equipment"},{value:"combo",label:"🔄 Combo Feeding",sub:"Both breast and formula"},{value:"unsure",label:"🤷 Not Sure Yet",sub:"We'll plan for both"}]},
+  {id:"stroller",type:"choice",title:"Stroller priority?",subtitle:"Your lifestyle determines the right stroller.",key:"strollerPriority",options:[{value:"travel",label:"✈️ Travel",sub:"We fly often, compact is key"},{value:"terrain",label:"🏔️ Terrain",sub:"We hike and walk rough ground"},{value:"urban",label:"🏙️ Urban",sub:"Tight spaces, public transit"},{value:"design",label:"🎨 Design",sub:"Looks and aesthetics matter"}]},
+  {id:"skip",type:"multiselect",title:"Anything you already have?",subtitle:"We'll skip these. No selection = include everything.",key:"skip",options:[{value:"stroller",label:"🚼 Stroller"},{value:"car-seat",label:"🚗 Car Seat"},{value:"crib",label:"🪵 Crib"},{value:"bassinet",label:"🛏️ Bassinet"},{value:"food-maker",label:"🥦 Baby Food Maker"},{value:"high-chair",label:"🍽️ High Chair"},{value:"monitor",label:"📷 Baby Monitor"},{value:"travel-crib",label:"⛺ Travel Crib"},{value:"glider",label:"🛋️ Glider / Recliner"},{value:"none",label:"✅ I need everything"}]},
+  {id:"dadRole",type:"choice",title:"How involved are you in the research?",subtitle:"No judgment — just helps us frame the guide for you.",key:"dadRole",options:[{value:"lead",label:"🧠 I'm leading this",sub:"Full research mode"},{value:"equal",label:"🤝 We're doing it together",sub:"Team effort"},{value:"support",label:"🙋 She leads, I support",sub:"I want to understand it"},{value:"surprise",label:"🎁 It's a surprise",sub:"I'm handling the registry solo"}]},
+  {id:"sleepTraining",type:"choice",title:"Sleep training philosophy?",subtitle:"Shapes our sound machine and monitor recommendations.",key:"sleepTraining",skippable:true,options:[{value:"cio",label:"🍼 Cry It Out (CIO)",sub:"Baby self-soothes independently. Hard for a few nights, works fast — usually 3–5 nights"},{value:"ferber",label:"📉 Ferber Method",sub:"Timed check-ins at increasing intervals. Middle ground — some crying, but you're present"},{value:"fading",label:"🌊 Fading / Chair Method",sub:"Gradual withdrawal of your presence over 1–2 weeks. Slower but no sustained crying"},{value:"notraining",label:"🤱 No Formal Training",sub:"Responsive settling, following baby's lead. Takes longer but no structured crying involved"},{value:"skip",label:"🤷 Undecided — Skip",sub:"We'll keep recommendations flexible for any approach"}]},
+  {id:"returnToWork",type:"choice",title:"Is mom returning to work?",subtitle:"Affects pump priority and milk storage quantity.",key:"returnToWork",skippable:true,options:[{value:"6weeks",label:"⏱️ Within 6 weeks",sub:"Need a hospital-grade pump ASAP and large milk storage supply from day one"},{value:"3months",label:"📅 Around 3 months",sub:"Standard maternity leave — moderate storage supply, order pump around week 30"},{value:"6months",label:"🗓️ Around 6 months",sub:"Extended leave — less urgency on storage volume"},{value:"no",label:"🏠 Staying home",sub:"Pump still useful for flexibility and supply building"},{value:"skip",label:"🤷 Undecided — Skip",sub:"We'll include full feeding gear recommendations either way"}]},
+  {id:"travelFrequency",type:"choice",title:"How often will you travel with baby?",subtitle:"Affects travel crib, portable warmer, carrier, and stroller fold priority.",key:"travelFrequency",skippable:true,options:[{value:"never",label:"🏡 Rarely or Never",sub:"Stick close to home — travel gear is low priority"},{value:"occasional",label:"🚗 Occasional Weekends",sub:"A few trips a year — lightweight travel gear is a nice-to-have"},{value:"monthly",label:"✈️ Monthly",sub:"Regular travel — portable, lightweight, TSA-friendly gear moves up your list"},{value:"frequent",label:"🌍 Constantly",sub:"Travel is your lifestyle — compact fold stroller and travel crib are must-haves"},{value:"skip",label:"🤷 Not Sure — Skip",sub:"We'll include balanced recommendations for occasional travel"}]},
+  {id:"diaperType",type:"choice",title:"Cloth or disposable diapers?",subtitle:"Changes our diaper pail, detergent, and cream recommendations.",key:"diaperType",skippable:true,options:[{value:"disposable",label:"🗑️ Disposable",sub:"Convenient, widely available. More expensive long-term, higher landfill waste"},{value:"cloth",label:"🌿 Cloth Diapers",sub:"Lower long-term cost, less waste, gentler on skin. More laundry and prep work"},{value:"hybrid",label:"🔄 Hybrid",sub:"Cloth at home, disposable when traveling or at daycare. Best of both worlds"},{value:"skip",label:"🤷 Undecided — Skip",sub:"We'll recommend options that work for either approach"}]}
+];
+
+const CATEGORY_GROUPS=[
+  {key:"sleep",label:"😴 Sleep Setup",sub:"Bassinet, crib, mattress, sleep sacks"},
+  {key:"feeding",label:"🍼 Feeding",sub:"Pump, bottles, storage, warmer"},
+  {key:"safety",label:"🛡️ Safety & Health",sub:"Car seat, monitor, health devices"},
+  {key:"gear",label:"🚼 Stroller & Carriers",sub:"Stroller, car seat, carrier, wrap"},
+  {key:"bath",label:"🛁 Bath Time",sub:"Tub, towels, washcloths"},
+  {key:"nursery",label:"🧸 Nursery & Play",sub:"Tummy time, lounger, bouncer, swing"},
+  {key:"diapering",label:"🗑️ Diapering",sub:"Diaper pail, cream, detergent"},
+  {key:"food",label:"🥦 Food & High Chair",sub:"Food maker, high chair, bibs"},
+  {key:"onthego",label:"✈️ On-the-Go",sub:"Travel warmer, milk cooler"},
+  {key:"extras",label:"🎒 Extras & Utilities",sub:"Diaper bag, travel crib, humidifier, glider, curtains, stain remover"}
+];
+
+const GROUP_TO_CATS={
+  sleep:["bassinet","crib","mattress","sleepsack","soundmachine"],
+  feeding:["bottles","bottlewarmer","breastpump","milkstorage","milkcooler","formulaprep","travelwarmer"],
+  safety:["carseat","monitor","nasal","thermometer","nailkit","chokingdevice"],
+  gear:["stroller","carrier","wrap"],
+  bath:["bathtub","bathtowels","washcloths","detergent"],
+  nursery:["tummymat","lounger","bouncer","swing","teether","cradlecap"],
+  diapering:["diaperpail","diapercream"],
+  food:["foodmaker","highchair","foodbib"],
+  onthego:["travelwarmer","milkcooler"],
+  extras:["diaperbag","travelcrib","humidifier","glider","blackoutcurtains","stainremover"]
+};
+
+function generateGuide(answers){
+  const dad=answers.dadName||"Dad";
+  const partner=answers.partnerName||"your partner";
+  const baby=answers.babyName||"Baby";
+  const season=answers.season||"spring";
+  const feeding=answers.feeding||"unsure";
+  const strollerP=answers.strollerPriority||"urban";
+  const nontoxic=answers.nontoxic||"moderate";
+  const skip=(answers.skip||[]).filter(s=>s!=="none");
+  const catBudgets=answers.categoryBudgets||{};
+  const defaultTier=answers.budget==="mix"?"mid":(answers.budget||"mid");
+  const getGroupTier=gk=>catBudgets[gk]||defaultTier;
+  const getCatTier=catKey=>{for(const[gk,cats]of Object.entries(GROUP_TO_CATS)){if(cats.includes(catKey))return getGroupTier(gk);}return defaultTier;};
+  const skippedCats=new Set();
+  skip.forEach(s=>{(SKIP_MAP[s]||[]).forEach(c=>skippedCats.add(c));});
+  const feedingCats=new Set([...FEEDING_CATS_BOTH]);
+  if(["breast","combo","unsure"].includes(feeding))FEEDING_CATS_BREAST.forEach(c=>feedingCats.add(c));
+  if(["formula","combo","unsure"].includes(feeding))FEEDING_CATS_FORMULA.forEach(c=>feedingCats.add(c));
+  const allFeedingCats=new Set([...FEEDING_CATS_BREAST,...FEEDING_CATS_FORMULA,...FEEDING_CATS_BOTH]);
+  const allCats=Object.keys(PRODUCTS).filter(k=>{if(skippedCats.has(k))return false;if(allFeedingCats.has(k)&&!feedingCats.has(k))return false;return true;});
+  const dadRole=answers.dadRole||"equal";
+  const sleepTrain=answers.sleepTraining||"skip";
+  const returnWork=answers.returnToWork||"skip";
+  const travelFreq=answers.travelFrequency||"skip";
+  const diaperType=answers.diaperType||"skip";
+  const roleNote={lead:`${dad} is running point — guide is written with full detail so you can make every call.`,equal:`${dad} and ${partner} are doing this together — everything you need to decide is here.`,support:`${partner} leads, ${dad} supports — guide helps you understand the why behind every recommendation.`,surprise:`${dad} is handling this solo — guide covers everything so you can build the full registry on your own.`}[dadRole];
+  const sections=allCats.map(catKey=>{
+    const cat=PRODUCTS[catKey];
+    const tier=getCatTier(catKey);
+    const pick=cat[tier]||cat.mid||cat.budget;
+    const b=cat.budget,m=cat.mid,l=cat.luxury;
+    let pn=`${pick.name} hits the sweet spot for your family.`;
+    if(catKey==="sleepsack")pn=`For a ${season} baby: ${TOG_GUIDE[season]}. ${pick.name} gives you exactly that.`;
+    else if(catKey==="stroller"){const tu=(travelFreq==="monthly"||travelFreq==="frequent")?" Since you travel frequently, compact fold and lightweight are non-negotiable.":"";pn=`${STROLLER_NOTES[strollerP]}${tu} The ${pick.name} is ${dad}'s pick.`;}
+    else if(catKey==="breastpump"){pn=returnWork==="6weeks"?`Mom is returning to work within 6 weeks — order the pump immediately and start building a freezer stash from week 1.`:returnWork==="3months"?`With a 3-month leave, order through Aeroflow at week 30–32 and aim to build 2–3 weeks of frozen supply before return.`:`Order through Aeroflow at week 30–32, ${dad}. Call insurance first — most families pay $0.`;}
+    else if(catKey==="carseat"&&nontoxic==="full")pn=`For a full crunchy household, the Nuna PIPA Aire RX is the only infant car seat with GREENGUARD Gold certification. That's your pick.`;
+    else if(catKey==="detergent"&&diaperType==="cloth")pn=`Cloth diapers need zero optical brighteners or fabric softener — both destroy absorbency. Molly's Suds is formulated to be cloth-diaper safe. It's the pick.`;
+    else if(catKey==="detergent")pn=`${dad}, throw out any Dreft in the house — EWG rates it F. It contains Sodium Borate, a documented endocrine disruptor marketed for babies. ${pick.name} is your replacement.`;
+    else if(catKey==="diaperpail"&&diaperType==="cloth")pn=`For cloth diapering, the Ubbi Steel is your pick — works with reusable wet bags and never absorbs odors the way plastic pails do.`;
+    else if(catKey==="travelcrib"){pn=(travelFreq==="monthly"||travelFreq==="frequent")?`Since you travel frequently, the Guava Lotus is the call — GREENGUARD Gold certified, fits in an overhead bin, side-zip door for soothing without lifting.`:travelFreq==="never"?`Since you rarely travel, the Graco Pack n Play is all you need — JPMA certified, perfect as a grandparents' house unit.`:`${pick.name} gives you the right balance of portability and safety certification.`;}
+    else if(catKey==="soundmachine"){pn=(sleepTrain==="cio"||sleepTrain==="ferber")?`With CIO or Ferber training, consistent white noise is critical. The Hatch Rest gives you app control so you never have to physically enter the room to adjust it.`:(sleepTrain==="fading"||sleepTrain==="notraining")?`With a gentler sleep approach, the Yogasleep Dohm's natural fan-based sound is ideal — the most soothing, organic white noise available.`:`${pick.name} is the right call for your nursery.`;}
+    else if(catKey==="monitor"){pn=(sleepTrain==="cio"||sleepTrain==="ferber")?`With CIO or Ferber, the Nanit Pro's AI tracking and app notifications mean you can monitor without entering the room — critical during the training window.`:`${pick.name} gives ${dad} and ${partner} real-time visibility without checking on baby in person.`;}
+    else if(nontoxic==="full"&&pick.cert&&pick.cert!=="—")pn=`For a full crunchy household, ${pick.name} is the right call — ${pick.cert} certification confirms it meets your standard.`;
+    else if(tier==="budget")pn=`At your budget tier, ${pick.name} gives you everything you need without overspending. Certified safe, proven reliable.`;
+    else if(tier==="luxury")pn=`${pick.name} is the best available in this category. For ${dad} and ${partner}, it's worth every dollar.`;
+    return{catKey,cat,tier,pick,b,m,l,personalNote:pn};
+  });
+  return{dad,partner,baby,season,sections,nontoxic,feeding,roleNote,sleepTrain,returnWork,travelFreq,diaperType};
+}
+
+// ══════════════════ APP STATE ══════════════════
+let currentStep=0;
+let answers={};
+let currentGuide=null;
+let expandedCards=new Set();
+
+function saveState(){try{localStorage.setItem("drb_answers",JSON.stringify(answers));localStorage.setItem("drb_step",String(currentStep));}catch(e){}}
+function loadState(){try{const a=localStorage.getItem("drb_answers");const s=localStorage.getItem("drb_step");if(a)answers=JSON.parse(a);if(s)currentStep=Math.min(parseInt(s),QUESTIONS.length-1);}catch(e){}}
+
+// ══════════════════ NAV ══════════════════
+function showApp(){
+  document.getElementById("landing").style.display="none";
+  const app=document.getElementById("app");
+  app.style.display="flex";
+  loadState();
+  if(Object.keys(answers).length>0&&currentStep>0){
+    document.getElementById("resume-bar").style.display="flex";
+  }
+  renderStep();
+}
+
+function restartApp(){
+  try{localStorage.removeItem("drb_answers");localStorage.removeItem("drb_step");}catch(e){}
+  answers={};currentStep=0;expandedCards=new Set();currentGuide=null;
+  document.getElementById("resume-bar").style.display="none";
+  document.getElementById("result").style.display="none";
+  document.getElementById("app").style.display="flex";
+  renderStep();
+}
+
+function goBack(){if(currentStep>0){currentStep--;saveState();renderStep();}}
+
+function goNext(){
+  const q=QUESTIONS[currentStep];
+  if(!canAdvance())return;
+  if(currentStep<QUESTIONS.length-1){
+    currentStep++;
+    saveState();
+    renderStep();
+  } else {
+    buildGuide();
+  }
+}
+
+function canAdvance(){
+  const q=QUESTIONS[currentStep];
+  if(["info","text","category-budget","multiselect"].includes(q.type))return true;
+  if(q.type==="choice"){
+    if(q.skippable)return true;
+    const v=answers[q.key];
+    return typeof v==="string"&&v.length>0;
+  }
+  return true;
+}
+
+// ══════════════════ RENDER STEP ══════════════════
+function renderStep(){
+  const q=QUESTIONS[currentStep];
+  const total=QUESTIONS.length-1;
+  const step=currentStep;
+
+  // Progress
+  const pc=document.getElementById("prog-container");
+  if(step>0){
+    pc.style.display="block";
+    document.getElementById("prog-step").textContent=`Step ${step} of ${total}`;
+    document.getElementById("prog-pct").textContent=`${Math.round(step/total*100)}%`;
+    document.getElementById("prog-fill").style.width=`${Math.round(step/total*100)}%`;
+  } else { pc.style.display="none"; }
+
+  // Back button
+  const bb=document.getElementById("back-btn");
+  bb.style.display=step>0?"block":"none";
+
+  // Next button
+  const nb=document.getElementById("next-btn");
+  const ready=canAdvance();
+  nb.className=`next-btn ${ready?"ready":"blocked"}`;
+  nb.textContent=step===QUESTIONS.length-1?"Build My Registry →":"Continue →";
+  nb.disabled=!ready;
+
+  // Hide nav for intro
+  document.getElementById("nav-bar").style.display=q.type==="info"?"none":"flex";
+
+  // Body
+  const body=document.getElementById("q-body");
+  body.innerHTML=renderQuestion(q);
+
+  // Wire up inputs
+  wireQuestion(q);
+}
+
+function renderQuestion(q){
+  if(q.type==="info"){
+    return `<div style="text-align:center;padding-top:16px">
+      <div style="font-size:52px;margin-bottom:20px">👶</div>
+      <h1 class="q-title" style="text-align:center">${q.title}</h1>
+      <p class="q-sub" style="text-align:center">${q.subtitle}</p>
+      <div class="intro-steps">
+        ${["14 questions about your budget, priorities &amp; lifestyle","Category-by-category budget overrides — spend more where it matters","Instant personalized guide — no waiting, no API, no errors","Share with your partner via text or WhatsApp"].map((t,i)=>`<div class="intro-step"><span class="intro-num">${i+1}</span><span class="intro-text">${t}</span></div>`).join("")}
+      </div>
+      <button class="start-btn" onclick="goNext()">${q.cta} →</button>
+    </div>`;
+  }
+  if(q.type==="text"){
+    return `<h2 class="q-title">${q.title}</h2><p class="q-sub">${q.subtitle}</p>
+      ${q.fields.map(f=>`<label class="field-label">${f.label}</label><input class="field-input" id="f_${f.key}" placeholder="${f.placeholder}" value="${answers[f.key]||""}" oninput="answers['${f.key}']=this.value;saveState()" />`).join("")}`;
+  }
+  if(q.type==="choice"){
+    return `<h2 class="q-title">${q.title}</h2>
+      <p class="q-sub">${q.subtitle}${q.skippable?'<span class="skip-hint">This question is optional — tap Continue to skip it</span>':""}</p>
+      ${q.options.map(o=>{
+        const active=answers[q.key]===o.value;
+        return `<button class="choice-btn${active?" active":""}" onclick="selectChoice('${q.key}','${o.value}','${q.id}')">
+          <div class="choice-radio">${active?`<span style="color:#fff;font-size:13px">✓</span>`:""}</div>
+          <div><div class="choice-label">${o.label}</div>${o.sub?`<div class="choice-sub">${o.sub}</div>`:""}</div>
+        </button>`;
+      }).join("")}`;
+  }
+  if(q.type==="multiselect"){
+    return `<h2 class="q-title">${q.title}</h2>
+      <p class="q-sub">${q.subtitle}<span class="optional-hint">Select all that apply — or skip to include everything</span></p>
+      ${q.options.map(o=>{
+        const sel=Array.isArray(answers[q.key])&&answers[q.key].includes(o.value);
+        return `<button class="choice-btn${sel?" active":""}" onclick="toggleMulti('${q.key}','${o.value}','${q.id}')">
+          <div class="choice-check">${sel?`<span style="color:#fff;font-size:13px">✓</span>`:""}</div>
+          <div><div class="choice-label">${o.label}</div></div>
+        </button>`;
+      }).join("")}`;
+  }
+  if(q.type==="category-budget"){
+    const def=answers.budget==="mix"?"mid":(answers.budget||"mid");
+    const cb=answers.categoryBudgets||{};
+    return `<h2 class="q-title">${q.title}</h2>
+      <p class="q-sub">${q.subtitle}</p>
+      <div class="def-bar">Default: <strong>${def}</strong>. Override any category below.</div>
+      ${CATEGORY_GROUPS.map(grp=>{
+        const cur=cb[grp.key]||def;
+        return `<div class="cat-bud-card">
+          <div class="cat-bud-label">${grp.label}</div>
+          <div class="cat-bud-sub">${grp.sub}</div>
+          <div class="tier-row">
+            ${["budget","mid","luxury"].map((t,i)=>{
+              const icons=["💰","⚖️","✨"];
+              const labels=["Budget","Mid","Luxury"];
+              const active=cur===t;
+              return `<button class="tier-btn${active?" active":""}" onclick="setCatBudget('${grp.key}','${t}')">
+                <span style="font-size:14px">${icons[i]}</span><span>${labels[i]}</span>
+              </button>`;
+            }).join("")}
+          </div>
+        </div>`;
+      }).join("")}`;
+  }
+  return "";
+}
+
+function wireQuestion(q){
+  // inputs already wired via oninput in HTML
+}
+
+function selectChoice(key,value,qid){
+  answers[key]=value;
+  saveState();
+  // Update UI without full re-render
+  document.querySelectorAll(".choice-btn").forEach(btn=>{
+    const v=btn.getAttribute("onclick").match(/'([^']+)'\)/)?.[1];
+  });
+  renderStep();
+}
+
+function toggleMulti(key,value,qid){
+  const curr=Array.isArray(answers[key])?answers[key]:[];
+  if(value==="none"){answers[key]=curr.includes("none")?[]:(["none"]);}
+  else{const wo=curr.filter(v=>v!=="none");answers[key]=wo.includes(value)?wo.filter(v=>v!==value):[...wo,value];}
+  saveState();
+  renderStep();
+}
+
+function setCatBudget(gk,tier){
+  if(!answers.categoryBudgets)answers.categoryBudgets={};
+  answers.categoryBudgets[gk]=tier;
+  saveState();
+  renderStep();
+}
+
+// ══════════════════ BUILD GUIDE ══════════════════
+function buildGuide(){
+  currentGuide=generateGuide(answers);
+  document.getElementById("app").style.display="none";
+  renderResult();
+  document.getElementById("result").style.display="block";
+}
+
+function renderResult(){
+  const g=currentGuide;
+  const partner=g.partner&&g.partner!=="your partner"?g.partner:"your partner";
+  const tierColors={budget:T.green,mid:T.blue,luxury:"#8B6B00"};
+  const tierLabels={budget:"💰 Budget",mid:"⚖️ Mid-Range",luxury:"✨ Luxury"};
+
+  let cardsHtml=g.sections.map((s,idx)=>{
+    const{cat,tier,pick,b,m,l,personalNote}=s;
+    const rows=[["💰 Budget",b,"budget"],["⚖️ Mid",m,"mid"],["✨ Luxury",l,"luxury"]].map(([tl,prod,tk])=>{
+      const isSel=tier===tk;
+      return `<div class="comp-row ${isSel?"sel":"unsel"}">
+        <div><span class="comp-tier">${tl}</span><span class="comp-pname">${prod.name}</span></div>
+        <span class="comp-price">${prod.price}</span>
+      </div>`;
+    }).join("");
+    const certHtml=pick.cert&&pick.cert!=="—"?`<div class="cert-pill">✓ ${pick.cert}</div>`:"";
+    const expandId=`exp_${idx}`;
+    const tierColor=tierColors[tier]||T.blue;
+    return `<div class="prod-card">
+      <div class="pc-head">
+        <div class="pc-top">
+          <div class="pc-name">${cat.icon} ${cat.label}</div>
+          <span class="pc-tier" style="background:${tierColor}22;color:${tierColor}">${tierLabels[tier]}</span>
+        </div>
+        ${rows}
+        <div class="pick-box"><div class="pick-label">⭐ Your Pick</div><div class="pick-note">${personalNote}</div></div>
+        ${certHtml}
+      </div>
+      <button class="expand-btn" onclick="toggleCard('${expandId}',this)"><span>Show all notes + what to avoid</span><span>▼</span></button>
+      <div id="${expandId}" style="display:none">
+        <div class="expand-body">
+          <div class="tier-note"><div class="tn-label">💰 Budget — ${b.name} (${b.price})</div><div class="tn-text">${b.note}</div></div>
+          <div class="tier-note"><div class="tn-label">⚖️ Mid — ${m.name} (${m.price})</div><div class="tn-text">${m.note}</div></div>
+          <div class="tier-note"><div class="tn-label">✨ Luxury — ${l.name} (${l.price})</div><div class="tn-text">${l.note}</div></div>
+          ${cat.avoid?`<div class="warn-box"><div class="warn-text"><strong>⚠️ What to avoid:</strong> ${cat.avoid}</div></div>`:""}
+          ${cat.warning&&!cat.warning.startsWith("⚠️ ")?`<div class="red-box"><div class="red-text">${cat.warning}</div></div>`:""}
+          ${cat.warning&&cat.warning.startsWith("⚠️ ")?`<div class="red-box"><div class="red-text">${cat.warning}</div></div>`:""}
+          ${cat.note?`<div class="pro-tip"><div class="pt-label">💡 Pro tip</div><div class="pt-text">${cat.note}</div></div>`:""}
+        </div>
+      </div>
+    </div>`;
+  }).join("");
+
+  const avoidItems=[
+    ["Dreft detergent","EWG 'F' rating. Contains Sodium Borate — a documented endocrine disruptor. Marketed for babies. Avoid entirely."],
+    ["Amber teething necklaces","Documented choking and strangulation deaths. No exceptions."],
+    ["PVC plastics (#3, #6, #7)","Commonly contain phthalates and other endocrine disruptors. Check recycling numbers on bath products."],
+    ["Flame retardant sleep products","Linked to developmental issues. Explicitly check sleep sacks and mattresses are flame-retardant-chemical-free."],
+    ["Microwave for breast milk","Destroys antibodies and creates dangerous hot spots. Always use a warmer or warm water bath."],
+    ["Benzocaine gels / belladonna tablets","FDA warning on both. Genuinely dangerous for infants. No safe dose exists."],
+    ["Swings, bouncers, loungers for sleep","AAP safe sleep requires firm flat surface, on back, alone. No exceptions."],
+  ].map(([name,reason])=>`<div class="avoid-item"><div class="avoid-name">${name}</div><div class="avoid-reason">${reason}</div></div>`).join("");
+
+  const checklistItems=[
+    ["Week 28–30","Call insurance to confirm breast pump coverage. Start Aeroflow order process."],
+    ["Week 30–32","Order breast pump through Aeroflow if breastfeeding."],
+    ["Week 32–34","Order all registry items with long lead times — Naturepedic, Babyletto, Nuna can have 4–6 week waits."],
+    ["Week 34–36","Paint nursery. Use ECOS or BioShield zero-VOC formula. Ventilate 2 weeks minimum before baby arrives."],
+    ["Week 36","Pre-wash all baby clothes, sheets, and swaddles with Molly's Suds."],
+    ["Week 36–38","Get car seat professionally installed and inspected. Many fire stations do this free."],
+    ["Before baby arrives","Take an infant CPR and first aid class — both of you. Most important thing on this list."],
+    ["Before baby arrives","Set up sheet layering on crib: mattress → waterproof pad → sheet → waterproof pad → sheet."],
+    ["Before baby arrives","Fill humidifier with distilled water only — never tap water."],
+    ["Before baby arrives","Charge and test all devices — Nanit, Hatch, baby monitor. Download apps now, not at 3am."],
+  ].map(([when,what])=>`<div class="cl-item"><span class="cl-when">${when}</span><span class="cl-what">${what}</span></div>`).join("");
+
+  document.getElementById("result").innerHTML=`
+    <div class="res-header">
+      <div class="res-eyebrow">Your Registry Guide</div>
+      <h1 class="res-title">${g.dad}${partner&&partner!=="your partner"?` &amp; ${partner}`:""}'s Baby Registry</h1>
+      <p class="res-sub">Personalized for ${g.baby} · ${g.sections.length} categories</p>
+      <div class="res-actions">
+        <button class="res-action ra-share" onclick="openShare()">💌 Share</button>
+        <button class="res-action ra-copy" id="copy-btn" onclick="copyGuide()">📋 Copy</button>
+        <button class="res-action ra-restart" onclick="restartApp()">🔄 Restart</button>
+      </div>
+    </div>
+    ${g.roleNote?`<div class="role-bar">👊 ${g.roleNote}</div>`:""}
+    ${g.nontoxic==="full"?`<div class="nt-bar">🌿 Full Crunchy Mode — All picks prioritize GOTS, OEKO-TEX, GREENGUARD Gold, and EWG certifications</div>`:""}
+    <div class="prod-section">${cardsHtml}</div>
+    <div class="avoid-box" style="margin:0 16px 16px">
+      <div style="font-size:14px;font-weight:700;color:#6B4800;margin-bottom:10px">⚠️ Non-Negotiables — What to Avoid for Every Family</div>
+      ${avoidItems}
+    </div>
+    <div class="checklist">
+      <div class="cl-title">📌 ${g.dad}'s Action Checklist</div>
+      ${checklistItems}
+    </div>
+    <div class="res-footer">
+      <button class="rf-share" onclick="openShare()">💌 Share with ${partner&&partner!=="your partner"?partner:"Your Partner"}</button>
+      <button class="rf-copy" id="copy-btn2" onclick="copyGuide()">📋 Copy Full Guide</button>
+      <button class="rf-restart" onclick="restartApp()">Start Over</button>
+      <p class="rf-credit">Know a dad who needs this? Share the tool 👊</p>
+    </div>
+  `;
+}
+
+function toggleCard(id,btn){
+  const el=document.getElementById(id);
+  const isOpen=el.style.display!=="none";
+  el.style.display=isOpen?"none":"block";
+  btn.querySelector("span:last-child").textContent=isOpen?"▼":"▲";
+  btn.querySelector("span:first-child").textContent=isOpen?"Show all notes + what to avoid":"Hide details";
+}
+
+function copyGuide(){
+  if(!currentGuide)return;
+  const g=currentGuide;
+  const lines=[`${g.dad}'s Baby Registry Guide`,"=".repeat(40)];
+  g.sections.forEach(s=>{
+    lines.push(`\n${s.cat.icon} ${s.cat.label}`);
+    lines.push(`  💰 Budget:    ${s.b.name} — ${s.b.price}`);
+    lines.push(`  ⚖️ Mid-Range: ${s.m.name} — ${s.m.price}`);
+    lines.push(`  ✨ Luxury:    ${s.l.name} — ${s.l.price}`);
+    lines.push(`  ⭐ Your Pick: ${s.pick.name}`);
+    lines.push(`  ${s.personalNote}`);
+  });
+  navigator.clipboard?.writeText(lines.join("\n")).then(()=>{
+    ["copy-btn","copy-btn2"].forEach(id=>{const b=document.getElementById(id);if(b){b.textContent="✓ Copied!";setTimeout(()=>b.textContent="📋 Copy",2500);}});
+  });
+}
+
+function openShare(){
+  const g=currentGuide;
+  if(!g)return;
+  const p=g.partner&&g.partner!=="your partner"?g.partner:"babe";
+  const msg=`Hey ${p}! 👶 I used this Dad's Registry Builder to put together our personalized baby registry guide — it covers every category with budget, mid-range, and luxury picks and gave us a specific recommendation based on our priorities. Worth going through together. 🙌`;
+  document.getElementById("modal-title").textContent=`Share with ${p} 💌`;
+  document.getElementById("modal-msg").textContent=`"${msg}"`;
+  document.getElementById("modal-sms-link").href=`sms:?body=${encodeURIComponent(msg)}`;
+  document.getElementById("modal-wa-link").href=`https://wa.me/?text=${encodeURIComponent(msg)}`;
+  document.getElementById("share-modal").classList.add("open");
+}
+
+function closeShare(e){
+  if(e.target===document.getElementById("share-modal"))document.getElementById("share-modal").classList.remove("open");
+}
+
+function copyModal(){
+  const msg=document.getElementById("modal-msg").textContent.replace(/^"|"$/g,"");
+  navigator.clipboard?.writeText(msg).then(()=>{
+    const b=document.getElementById("modal-copy-btn");
+    b.textContent="✓ Copied!";
+    setTimeout(()=>b.textContent="📋 Copy message",2500);
+  });
+}
+
+// ══════════════════ LANDING SCROLL ANIMATIONS ══════════════════
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("visible");}),{threshold:.12});
+document.querySelectorAll(".fade-in").forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
