@@ -17,59 +17,60 @@
       --text:#0D1B2A;--textlt:#4A6278;--white:#FFFEF9;
     }
     html{scroll-behavior:smooth}
-    body{font-family:'DM Sans',sans-serif;background:#F2E9D8;color:#2C1A0E;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--white);overflow-x:hidden;-webkit-font-smoothing:antialiased}
     button{font-family:'DM Sans',sans-serif;cursor:pointer}
     input{font-family:'DM Sans',sans-serif}
 
     /* ── LANDING ── */
     #landing{min-height:100vh;display:flex;flex-direction:column}
-    .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 20%,#C4A07830 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 80%,#D4A84325 0%,transparent 50%);pointer-events:none}
+    .hero{display:flex;flex-direction:column;justify-content:center;padding:72px 24px 56px;position:relative;overflow:hidden}
+    .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 20%,#1B3A5C88 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 80%,#D4A84322 0%,transparent 50%);pointer-events:none}
     .eyebrow{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;opacity:0;animation:fadeUp .6s .1s ease forwards}
     .hero-title{font-family:'DM Serif Display',serif;font-size:clamp(38px,10vw,72px);line-height:1.05;margin-bottom:24px;opacity:0;animation:fadeUp .6s .25s ease forwards}
     .hero-title em{font-style:italic;color:var(--gold)}
-    .hero-sub{font-size:clamp(15px,4vw,18px);line-height:1.7;color:#6B4A2C;max-width:480px;margin-bottom:40px;font-weight:300;opacity:0;animation:fadeUp .6s .4s ease forwards}
+    .hero-sub{font-size:clamp(15px,4vw,18px);line-height:1.7;color:#A8BDD0;max-width:480px;margin-bottom:40px;font-weight:300;opacity:0;animation:fadeUp .6s .4s ease forwards}
     .hero-cta{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:var(--navy);font-family:'DM Serif Display',serif;font-size:18px;padding:18px 36px;border-radius:4px;border:none;transition:all .2s;opacity:0;animation:fadeUp .6s .55s ease forwards;align-self:flex-start}
     .hero-cta:hover{background:#E8B847;transform:translateY(-2px);box-shadow:0 12px 40px #D4A84344}
     .hero-stats{display:flex;gap:32px;margin-top:48px;opacity:0;animation:fadeUp .6s .7s ease forwards;flex-wrap:wrap}
     .stat-num{font-family:'DM Serif Display',serif;font-size:32px;color:var(--gold);line-height:1}
-    .stat-label{font-size:12px;color:#9A7050;font-weight:400;letter-spacing:.3px;margin-top:4px}
-    .l-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(0,0,0,0.12),transparent);margin:0 24px}
+    .stat-label{font-size:12px;color:#6A8BA4;font-weight:400;letter-spacing:.3px;margin-top:4px}
+    .l-divider{height:1px;background:linear-gradient(90deg,transparent,#ffffff18,transparent);margin:0 24px}
     .l-section{padding:64px 24px}
     .l-label{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
     .l-title{font-family:'DM Serif Display',serif;font-size:clamp(28px,7vw,48px);line-height:1.15;margin-bottom:48px;max-width:500px}
     .steps{display:flex;flex-direction:column}
-    .step{display:flex;gap:20px;padding:28px 0;border-bottom:1px solid rgba(0,0,0,0.08)}
+    .step{display:flex;gap:20px;padding:28px 0;border-bottom:1px solid #ffffff0f}
     .step:last-child{border-bottom:none}
-    .step-num{font-family:'DM Serif Display',serif;font-size:48px;color:rgba(0,0,0,0.10);line-height:1;flex-shrink:0;width:48px;margin-top:-8px}
+    .step-num{font-family:'DM Serif Display',serif;font-size:48px;color:#ffffff22;line-height:1;flex-shrink:0;width:48px;margin-top:-8px}
     .step-title{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:8px;line-height:1.2}
-    .step-desc{font-size:14px;color:#7A5840;line-height:1.7;font-weight:300}
+    .step-desc{font-size:14px;color:#7A9AB4;line-height:1.7;font-weight:300}
     .cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .cat-pill{background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.10);border-radius:8px;padding:14px 16px;display:flex;align-items:center;gap:10px}
+    .cat-pill{background:#ffffff08;border:1px solid #ffffff12;border-radius:8px;padding:14px 16px;display:flex;align-items:center;gap:10px}
     .cat-icon{font-size:18px;flex-shrink:0}
-    .cat-name{font-size:13px;font-weight:500;color:#2C1A0E}
-    .cat-sub{font-size:11px;color:#9A7050;margin-top:2px}
-    .nt-strip{background:#E5D5B0;border-top:1px solid rgba(0,0,0,0.08);border-bottom:1px solid rgba(0,0,0,0.08);padding:48px 24px}
+    .cat-name{font-size:13px;font-weight:500;color:#C8D8E8}
+    .cat-sub{font-size:11px;color:#4A6278;margin-top:2px}
+    .nt-strip{background:#0A1520;border-top:1px solid #ffffff0a;border-bottom:1px solid #ffffff0a;padding:48px 24px}
     .cert-list{display:flex;flex-direction:column;gap:16px;margin-top:32px}
     .cert-row{display:flex;gap:14px;align-items:flex-start}
     .cert-badge{background:var(--green);color:#fff;font-size:9px;font-weight:700;padding:4px 8px;border-radius:20px;letter-spacing:.5px;white-space:nowrap;flex-shrink:0;margin-top:2px}
-    .cert-text{font-size:13px;color:#7A5840;line-height:1.6;font-weight:300}
-    .cert-text strong{color:#2C1A0E;font-weight:500}
-    .test-section{padding:64px 24px;background:linear-gradient(180deg,#F2E9D8 0%,#EAD9BF 100%)}
-    .testimonial{background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.10);border-radius:12px;padding:28px 24px;margin-bottom:16px;position:relative}
+    .cert-text{font-size:13px;color:#7A9AB4;line-height:1.6;font-weight:300}
+    .cert-text strong{color:var(--white);font-weight:500}
+    .test-section{padding:64px 24px;background:linear-gradient(180deg,var(--navy) 0%,#091422 100%)}
+    .testimonial{background:#ffffff06;border:1px solid #ffffff10;border-radius:12px;padding:28px 24px;margin-bottom:16px;position:relative}
     .testimonial::before{content:'"';font-family:'DM Serif Display',serif;font-size:80px;color:var(--gold);opacity:.3;position:absolute;top:-10px;left:20px;line-height:1}
-    .test-text{font-family:'DM Serif Display',serif;font-style:italic;font-size:16px;line-height:1.6;color:#3A2010;margin-bottom:16px;padding-top:16px}
-    .test-author{font-size:12px;color:#8B6B50;font-weight:500;letter-spacing:.5px}
-    .bottom-cta{padding:64px 24px 120px;text-align:center;background:#EAD9BF;position:relative;overflow:hidden}
+    .test-text{font-family:'DM Serif Display',serif;font-style:italic;font-size:16px;line-height:1.6;color:#C8D8E8;margin-bottom:16px;padding-top:16px}
+    .test-author{font-size:12px;color:#4A6278;font-weight:500;letter-spacing:.5px}
+    .bottom-cta{padding:64px 24px 120px;text-align:center;background:#091422;position:relative;overflow:hidden}
     .bottom-cta::before{content:'';position:absolute;bottom:-100px;left:50%;transform:translateX(-50%);width:400px;height:400px;background:radial-gradient(circle,#D4A84318 0%,transparent 65%);pointer-events:none}
     .btm-title{font-family:'DM Serif Display',serif;font-size:clamp(30px,8vw,52px);line-height:1.1;margin-bottom:16px}
-    .btm-sub{font-size:15px;color:#7A5840;margin-bottom:40px;font-weight:300;line-height:1.6}
+    .btm-sub{font-size:15px;color:#6A8BA4;margin-bottom:40px;font-weight:300;line-height:1.6}
     .btm-btn{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:var(--navy);font-family:'DM Serif Display',serif;font-size:18px;padding:20px 40px;border-radius:4px;border:none;transition:all .2s}
     .btm-btn:hover{background:#E8B847;transform:translateY(-2px)}
     .free-badge{display:inline-block;background:var(--green);color:#fff;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:24px}
-    .l-footer{padding:24px;border-top:1px solid rgba(0,0,0,0.08);text-align:center;font-size:11px;color:#9A7050;background:#D6C4A0}
-    .sticky{position:fixed;bottom:0;left:0;right:0;background:#3D2810;border-top:1px solid rgba(0,0,0,0.20);padding:16px 24px 28px;z-index:100;display:flex;gap:12px;align-items:center}
-    .sticky-text{flex:1;font-size:13px;color:#C4A880;line-height:1.4}
-    .sticky-text strong{display:block;color:#FDFAF5;font-size:14px;margin-bottom:2px}
+    .l-footer{padding:24px;border-top:1px solid #ffffff08;text-align:center;font-size:11px;color:#2A4055;background:#060E18}
+    .sticky{position:fixed;bottom:0;left:0;right:0;background:var(--navy);border-top:1px solid #ffffff15;padding:16px 24px 28px;z-index:100;display:flex;gap:12px;align-items:center}
+    .sticky-text{flex:1;font-size:13px;color:#7A9AB4;line-height:1.4}
+    .sticky-text strong{display:block;color:var(--white);font-size:14px;margin-bottom:2px}
     .sticky-btn{background:var(--gold);color:var(--navy);font-family:'DM Serif Display',serif;font-size:15px;padding:13px 22px;border-radius:4px;border:none;white-space:nowrap;flex-shrink:0}
     .fade-in{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
     .fade-in.visible{opacity:1;transform:translateY(0)}
@@ -251,7 +252,7 @@
   <div class="nt-strip fade-in">
     <p class="l-label">The non-toxic guide</p>
     <h2 style="font-family:'DM Serif Display',serif;font-size:clamp(24px,6vw,36px);line-height:1.15;margin-bottom:8px">Know what the certifications actually mean.</h2>
-    <p style="font-size:14px;color:#7A5840;font-weight:300;line-height:1.6">Most dads have never heard of GOTS or OEKO-TEX. The guide explains each one in plain language.</p>
+    <p style="font-size:14px;color:#6A8BA4;font-weight:300;line-height:1.6">Most dads have never heard of GOTS or OEKO-TEX. The guide explains each one in plain language.</p>
     <div class="cert-list">
       <div class="cert-row"><span class="cert-badge">GOTS</span><p class="cert-text"><strong>Global Organic Textile Standard</strong> — fabric grown AND processed without harmful chemicals. The highest bar for baby textiles.</p></div>
       <div class="cert-row"><span class="cert-badge">OEKO-TEX</span><p class="cert-text"><strong>Tested against 350+ toxic substances.</strong> What matters is the finished product is safe — not just what it's made from.</p></div>
@@ -275,7 +276,7 @@
     <button class="btm-btn" onclick="showApp()">Build my registry →</button>
   </section>
 
-  <footer class="l-footer">Nobody Told Dad! · Built for dads by a dad · Free forever · No account required</footer>
+  <footer class="l-footer">© 2026 Nobody Told Dad! · All rights reserved · Built for dads by a dad · Free forever</footer>
 
   <div class="sticky">
     <div class="sticky-text"><strong>Nobody Told Dad!</strong>Free · 10 min · 42 categories</div>
@@ -794,7 +795,7 @@ function copyGuide(){
 function openShare(){
   const g=currentGuide;if(!g)return;
   const p=g.partner&&g.partner!=="your partner"?g.partner:"babe";
-  const msg=`Hey ${p}! 👶 I used this Dad's Registry Builder to put together our personalized baby registry guide — it covers every category with budget, mid-range, and luxury picks and gave us a specific recommendation based on our priorities. Worth going through together. 🙌`;
+  const msg=`Hey ${p}! 👶 I used this Nobody Told Dad! registry builder to put together our personalized baby registry guide — it covers every category with budget, mid-range, and luxury picks and gave us a specific recommendation based on our priorities. Worth going through together. 🙌`;
   document.getElementById("modal-title").textContent=`Share with ${p} 💌`;
   document.getElementById("modal-msg").textContent=`"${msg}"`;
   document.getElementById("modal-sms-link").href=`sms:?body=${encodeURIComponent(msg)}`;
