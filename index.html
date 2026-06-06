@@ -23,7 +23,6 @@
 
     /* ── LANDING ── */
     #landing{min-height:100vh;display:flex;flex-direction:column}
-    .hero{display:flex;flex-direction:column;justify-content:center;padding:72px 24px 56px;position:relative;overflow:hidden}
     .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 20%,#C4A07830 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 80%,#D4A84325 0%,transparent 50%);pointer-events:none}
     .eyebrow{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;opacity:0;animation:fadeUp .6s .1s ease forwards}
     .hero-title{font-family:'DM Serif Display',serif;font-size:clamp(38px,10vw,72px);line-height:1.05;margin-bottom:24px;opacity:0;animation:fadeUp .6s .25s ease forwards}
@@ -103,8 +102,8 @@
     .choice-label{font-weight:700;font-size:14px;color:var(--text);font-family:'DM Serif Display',serif}
     .choice-sub{font-size:12px;color:var(--textlt);margin-top:2px}
     .nav-bar{padding:12px 20px 36px;background:var(--white);border-top:1px solid var(--warm);display:flex;gap:12px}
-    .back-btn{flex:1;padding:14px;border-radius:10px;border:1.5px solid var(--warm);background:var(--white);font-size:14px;font-weight:600;color:var(--textlt)}
-    .next-btn{flex:2;padding:14px;border-radius:10px;border:none;font-size:14px;font-weight:700;color:var(--white);transition:all .15s}
+    .back-btn{flex:1;padding:14px;border-radius:10px;border:1.5px solid var(--warm);background:var(--white);font-size:14px;font-weight:600;color:var(--textlt);touch-action:manipulation;cursor:pointer}
+    .next-btn{flex:2;padding:14px;border-radius:10px;border:none;font-size:14px;font-weight:700;color:var(--white);transition:all .15s;touch-action:manipulation;cursor:pointer}
     .next-btn.ready{background:linear-gradient(135deg,var(--navy),var(--steel));box-shadow:0 4px 16px #0D1B2A33}
     .next-btn.blocked{background:var(--warm);color:var(--textlt);cursor:default}
     .cat-bud-card{background:var(--white);border-radius:12px;border:1.5px solid var(--warm);padding:12px 14px;margin-bottom:10px}
@@ -276,7 +275,7 @@
     <button class="btm-btn" onclick="showApp()">Build my registry →</button>
   </section>
 
-  <footer class="l-footer">© 2026 Nobody Told Dad! · All rights reserved · Built for dads by a dad · Free forever</footer>
+  <footer class="l-footer">Nobody Told Dad! · Built for dads by a dad · Free forever · No account required</footer>
 
   <div class="sticky">
     <div class="sticky-text"><strong>Nobody Told Dad!</strong>Free · 10 min · 42 categories</div>
